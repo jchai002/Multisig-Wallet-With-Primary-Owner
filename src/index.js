@@ -10,6 +10,8 @@ import requireWallet from "./components/HOC/require_wallet";
 import App from "App";
 import Home from "app/components/Home";
 import Transactions from "app/components/Transactions";
+import MissingWeb3 from "app/components/MissingWeb3";
+import MissingWallet from "app/components/MissingWallet";
 
 // Redux Store
 import store from "store";
@@ -22,6 +24,8 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={requireWallet(Home)} />
+        <Route path="missing-web3" component={MissingWeb3} />
+        <Route path="missing-wallet" component={MissingWallet} />
         <Route path="transactions" component={requireWallet(Transactions)} />
       </Route>
     </Router>

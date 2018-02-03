@@ -32,9 +32,10 @@ export function getWalletAddress() {
       if (err) {
         reject(err);
       }
-      if (address) {
-        resolve(address);
+      if (!address) {
+        reject("no address found");
       }
+      resolve(address);
     });
   });
 }

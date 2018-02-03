@@ -5,6 +5,16 @@ import { initializeWeb3 } from "app/actions/web3Actions";
 import { getWalletInfo } from "app/actions/walletActions";
 
 export default function(ComposedComponent) {
+  @connect(
+    ({ web3, wallet }) => ({
+      web3,
+      wallet
+    }),
+    {
+      initializeWeb3,
+      getWalletInfo
+    }
+  )
   class HasWallet extends Component {
     static contextTypes = {
       router: PropTypes.object
@@ -18,61 +28,20 @@ export default function(ComposedComponent) {
 
     componentWillReceiveProps(nextProps) {
       if (!nextProps.web3) {
-        this.props.initializeWeb3();
+        this.context.router.push("/missing-web3");
       }
-      if (!nextProps.wallet.address) {
-        // only get wallet if not logged in
-        return this.props.getWalletInfo();
+      if (nextProps.wallet.walletFound === null) {
+        this.props.getWalletInfo();
+      }
+      if (nextProps.wallet.walletFound === false) {
+        this.context.router.push("/missing-wallet");
       }
     }
 
     render() {
-      console.log("comp", this.props);
-      if (!this.props.web3) {
-        // if web3 not found
-        return (
-          <div className="unauthenticated">
-            <p>
-              This Dapp requires the{" "}
-              <a className="link" href="https://metamask.io/">
-                MetaMask
-              </a>{" "}
-              Chrome extension. You can{" "}
-              <a
-                href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
-                className="link"
-              >
-                download it here
-              </a>.
-            </p>
-          </div>
-        );
-      } else if (!this.props.wallet.address) {
-        // if wallet address not found
-        return (
-          <div className="unauthenticated">
-            <p>
-              Please login with{" "}
-              <a className="link" href="https://metamask.io/">
-                MetaMask
-              </a>
-            </p>
-          </div>
-        );
-      } else {
-        return <ComposedComponent {...this.props} />;
-      }
+      return <ComposedComponent {...this.props} />;
     }
   }
 
-  return connect(
-    ({ web3, wallet }) => ({
-      web3,
-      wallet
-    }),
-    {
-      initializeWeb3,
-      getWalletInfo
-    }
-  )(HasWallet);
+  return HasWallet;
 }
