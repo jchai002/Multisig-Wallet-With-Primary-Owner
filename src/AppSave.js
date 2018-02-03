@@ -56,7 +56,7 @@ export default class App extends Component {
       // if token expired
       return (
         <div className="unauthenticated">
-          <p>Authorization expired, please go back to iCash.</p>
+          <p>Authorization expired, please go back to Multisig.</p>
         </div>
       );
       // should be authorized pass this line

@@ -8,9 +8,9 @@ export async function getDollarToETHRate(dollars) {
   return dollars / Number(rate);
 }
 
-export async function getETHToICashRate(amountInETH) {
+export async function getETHToMultisigRate(amountInETH) {
   // mock api call
   await setTimeout(null, 2000);
-  // mock price of iCash to be 0.5 ether
+  // mock price of Multisig to be 0.5 ether
   return amountInETH * 2;
 }

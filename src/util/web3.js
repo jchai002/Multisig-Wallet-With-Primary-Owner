@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import store from "app/store";
-import tokenJSON from "contracts/iCashToken.json";
+import tokenJSON from "contracts/MultisigToken.json";
 import detectNetwork from "web3-detect-network";
 
 export function getWeb3() {

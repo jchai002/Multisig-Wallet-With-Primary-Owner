@@ -15,7 +15,7 @@ export default class Header extends Component {
       <header>
         <div className="nav-desktop">
           <div className="logo">
-            <h1>iCash</h1>
+            <h1>Multisig</h1>
           </div>
           <div className="wallet">
             <p>
@@ -28,7 +28,7 @@ export default class Header extends Component {
               ETH: <span className="amount">{etherBalance}</span>
             </p>
             <p>
-              iCash: <span className="amount">{tokenBalance}</span>
+              Multisig: <span className="amount">{tokenBalance}</span>
             </p>
           </div>
         </div>

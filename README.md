@@ -1,4 +1,4 @@
-# React, Redux and Authentication iCash Wallet
+# React, Redux and Authentication Multisig Wallet
 
 In addition to Webpack and React, this box adds: react-router, redux and redux-auth-wrapper for authentication powered by a smart contract.
 
