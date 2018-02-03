@@ -1,2 +1,5 @@
 // web3
 export const WEB3_INITIALIZED = "WEB3_INITIALIZED";
+
+// wallet
+export const GET_WALLET_INFO_SUCCESS = "GET_WALLET_INFO_SUCCESS";
