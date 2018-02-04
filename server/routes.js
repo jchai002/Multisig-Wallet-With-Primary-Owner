@@ -22,10 +22,16 @@ routes.post("/transactions", async (req, res) => {
       "transactionId",
       "Submission"
     );
+    const sender = utils.getParamFromTxEvent(
+      transaction,
+      "sender",
+      "Confirmation"
+    );
+    console.log("sender", sender);
     const newTransaction = new Transaction({
       transactionId,
       transactionHash: transaction.tx,
-      confirmedBy: [],
+      confirmedBy: [sender],
       confirmed: false,
       dateSubmitted: Date.now(),
       dateConfirmed: null
