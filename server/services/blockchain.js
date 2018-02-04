@@ -7,18 +7,9 @@ function getTransanctionStatus(tx) {
   return new Promise((resolve, reject) => {
     web3.eth.getTransactionReceipt(tx, (err, res) => {
       if (err) {
-        console.log("err: ", err);
         return reject(err);
       }
-      var result = null;
-      if (res) {
-        console.log("getTransanctionStatus", res.logs);
-        result = {
-          blockNumber: res.blockNumber,
-          status: res.status
-        };
-      }
-      return resolve(result);
+      return resolve(res);
     });
   });
 }
@@ -38,4 +29,12 @@ function pollForTransactionState(tx) {
   });
 }
 
-module.exports = { pollForTransactionState };
+function getParamFromTxEvent(transaction, paramName, eventName) {
+  let logs = transaction.logs;
+  if (eventName != null) {
+    logs = logs.filter(l => l.event === eventName);
+  }
+  return logs[0].args[paramName];
+}
+
+module.exports = { pollForTransactionState, getParamFromTxEvent };

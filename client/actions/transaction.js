@@ -16,19 +16,24 @@ export function submitTransaction(destination, amount) {
     const web3 = store.getState().web3;
     const sender = web3.eth.accounts[0];
     const wallet = await getWallet();
-    var transaction = await wallet.submitTransaction(destination, amount, "", {
-      from: sender
-    });
-    var { tx } = transaction;
-    var transactionId = web3Utils.getParamFromTxEvent(
-      transaction,
-      "transactionId",
-      "Submission"
+    const transaction = await wallet.submitTransaction(
+      destination,
+      amount,
+      "",
+      {
+        from: sender
+      }
     );
+    // var { tx } = transaction;
+    // var transactionId = web3Utils.getParamFromTxEvent(
+    //   transaction,
+    //   "transactionId",
+    //   "Submission"
+    // );
+    //
+    // console.log(transactionId);
 
-    console.log(transactionId);
-
-    // var response = await api.post("/transactions", { tx });
+    var response = await api.post("/transactions", { transaction });
 
     // let tx_hash = await web3Utils.sendEther(destination, amount);
     // console.log(tx_hash);
