@@ -10,6 +10,7 @@ import requireAccount from "./components/HOC/require_account";
 import App from "App";
 import Wallet from "app/components/Wallet";
 import Transactions from "app/components/Transactions";
+import Settings from "app/components/Settings";
 import MissingWeb3 from "app/components/Error/MissingWeb3";
 import MissingAccount from "app/components/Error/MissingAccount";
 
@@ -26,6 +27,7 @@ ReactDOM.render(
         <IndexRoute component={requireAccount(Wallet)} />
         <Route path="missing-web3" component={MissingWeb3} />
         <Route path="missing-account" component={MissingAccount} />
+        <Route path="settings" component={requireAccount(Settings)} />
         <Route path="transactions" component={requireAccount(Transactions)} />
       </Route>
     </Router>

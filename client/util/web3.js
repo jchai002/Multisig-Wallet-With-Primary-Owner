@@ -23,6 +23,10 @@ export function getWeb3() {
   });
 }
 
+export function storedWeb3() {
+  return store.getState().web3;
+}
+
 export function getAccountAddress() {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
