@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import { initializeWeb3 } from "app/actions/web3Actions";
-import { getWalletInfo } from "app/actions/walletActions";
+import { initializeWeb3 } from "app/actions/web3";
+import { getWalletInfo } from "app/actions/wallet";
 
 export default function(ComposedComponent) {
   @connect(

@@ -59,3 +59,24 @@ export function getEtherBalance() {
     });
   });
 }
+
+export function sendEther(destination, amount) {
+  return new Promise(async (resolve, reject) => {
+    const web3 = store.getState().web3;
+    const walletAddress = await getWalletAddress();
+    web3.eth.sendTransaction(
+      {
+        from: walletAddress,
+        to: destination,
+        value: web3.toWei(amount, "ether"),
+        gas: 50000
+      },
+      async (err, tx_hash) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(tx_hash);
+      }
+    );
+  });
+}

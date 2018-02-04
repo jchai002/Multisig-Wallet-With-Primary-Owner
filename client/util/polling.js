@@ -1,5 +1,5 @@
 import store from "app/store";
-import { getWalletInfo } from "app/actions/walletActions";
+import { getWalletInfo } from "app/actions/wallet";
 import { getEtherBalance, getTokenBalance } from "app/util/web3";
 
 export function pollForAccountUpdate() {

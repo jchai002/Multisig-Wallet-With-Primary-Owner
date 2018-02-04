@@ -4,7 +4,7 @@ import {
 } from "app/constants/ActionTypes";
 import { getWalletAddress, getEtherBalance } from "app/util/web3";
 
-export function getWalletInfo(web3) {
+export function getWalletInfo() {
   return async dispatch => {
     try {
       var address = await getWalletAddress();
