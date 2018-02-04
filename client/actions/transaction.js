@@ -35,6 +35,7 @@ export function submitTransaction(destination, amount) {
 
     var response = await api.post("/transactions", { transaction });
 
+    console.log(response);
     // let tx_hash = await web3Utils.sendEther(destination, amount);
     // console.log(tx_hash);
   };
