@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { sendEther } from "app/actions/transaction";
+import { submitTransaction } from "app/actions/transaction";
 
 @connect(
   ({ transactions }) => ({
     transactions
   }),
-  { sendEther }
+  { submitTransaction }
 )
 export default class Account extends Component {
   constructor(props) {
@@ -18,11 +18,10 @@ export default class Account extends Component {
   handleSubmit(e) {
     e.preventDefault();
     var { destination, amount } = this.state;
-    this.props.sendEther(destination, amount);
+    this.props.submitTransaction(destination, amount);
   }
 
   render() {
-    console.log(this.state);
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
