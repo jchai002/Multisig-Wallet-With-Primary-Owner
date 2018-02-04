@@ -2,6 +2,10 @@ import * as web3Utils from "app/util/web3";
 import axios from "axios";
 const api = axios.create({ baseURL: "/v1" });
 import { getWallet } from "app/util/contract";
+import {
+  GET_TRANSACTIONS_SUCCESS,
+  SUBMIT_TRANSACTION_SUCCESS
+} from "app/constants/ActionTypes";
 
 export function submitTransaction(destination, amount) {
   return async dispatch => {
@@ -16,19 +20,16 @@ export function submitTransaction(destination, amount) {
         from: sender
       }
     );
-    // var { tx } = transaction;
-    // var transactionId = web3Utils.getParamFromTxEvent(
-    //   transaction,
-    //   "transactionId",
-    //   "Submission"
-    // );
-    //
-    // console.log(transactionId);
+    const response = await api.post("/transactions", { transaction });
+    dispatch({ type: SUBMIT_TRANSACTION_SUCCESS });
+  };
+}
 
-    var response = await api.post("/transactions", { transaction });
-
-    console.log(response);
-    // let tx_hash = await web3Utils.sendEther(destination, amount);
-    // console.log(tx_hash);
+export function getTransactions() {
+  return async dispatch => {
+    const response = await api.get("/transactions");
+    if (response.data) {
+      dispatch({ type: GET_TRANSACTIONS_SUCCESS, payload: response.data });
+    }
   };
 }

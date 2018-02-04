@@ -27,7 +27,6 @@ routes.post("/transactions", async (req, res) => {
       "sender",
       "Confirmation"
     );
-    console.log("sender", sender);
     const newTransaction = new Transaction({
       transactionId,
       transactionHash: transaction.tx,
@@ -42,7 +41,6 @@ routes.post("/transactions", async (req, res) => {
   } catch (err) {
     res.status(422).send(err);
   }
-  // console.log("newTransaction", newTransaction);
 });
 
 module.exports = routes;
