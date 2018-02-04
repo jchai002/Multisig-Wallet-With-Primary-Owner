@@ -8,7 +8,7 @@ var url = require("url");
 var path = require("path");
 var paths = require("./paths");
 var getClientEnvironment = require("./env");
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith("/");
@@ -79,7 +79,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: [".js", ".json", ".jsx", ""],
     alias: {
-      app: path.resolve(__dirname, "../src"),
+      app: path.resolve(__dirname, "../client"),
       contracts: path.resolve(__dirname, "../build/contracts")
     }
   },

@@ -7,7 +7,7 @@ var WatchMissingNodeModulesPlugin = require("react-dev-utils/WatchMissingNodeMod
 var getClientEnvironment = require("./env");
 var path = require("path");
 var paths = require("./paths");
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 var publicPath = "/";
@@ -73,7 +73,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: [".js", ".json", ".jsx", ""],
     alias: {
-      app: path.resolve(__dirname, "../src"),
+      app: path.resolve(__dirname, "../client"),
       contracts: path.resolve(__dirname, "../build/contracts")
     }
   },

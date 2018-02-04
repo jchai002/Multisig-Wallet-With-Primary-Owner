@@ -95,7 +95,7 @@
   },
   "scripts": {
     "start":
-      "concurrently \"nodemon src/server/index.js\" \"node scripts/start.js\"",
+      "concurrently \"nodemon server/index.js\" \"node scripts/start.js\"",
     "build": "node scripts/build.js",
     "test": "NODE_ENV=test sh scripts/test.sh",
     "testjs": "node scripts/test.js --env=jsdom"
