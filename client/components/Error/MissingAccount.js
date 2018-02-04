@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { initializeWeb3 } from "app/actions/web3";
-import { getWalletInfo } from "app/actions/wallet";
+import { getAccountInfo } from "app/actions/account";
 
 @connect(
-  ({ web3, wallet }) => ({
+  ({ web3, account }) => ({
     web3,
-    wallet
+    account
   }),
-  { initializeWeb3, getWalletInfo }
+  { initializeWeb3, getAccountInfo }
 )
-export default class MissingWallet extends Component {
+export default class MissingAccount extends Component {
   static contextTypes = {
     router: PropTypes.object
   };
@@ -24,10 +24,10 @@ export default class MissingWallet extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    if (nextProps.wallet.walletFound === null) {
-      this.props.getWalletInfo();
+    if (nextProps.account.accountFound === null) {
+      this.props.getAccountInfo();
     }
-    if (nextProps.wallet.walletFound) {
+    if (nextProps.account.accountFound) {
       this.context.router.push("/");
     }
   }

@@ -1,10 +1,10 @@
-import {
-  GET_WALLET_INFO_SUCCESS,
-  GET_WALLET_INFO_FAIL
-} from "app/constants/ActionTypes";
 import * as promisedWeb3 from "app/util/web3";
 import axios from "axios";
 const api = axios.create({ baseURL: "/v1" });
+const contract = require("truffle-contract");
+// import Multisig from "contracts/MultisigAccount.json";
+
+function getAccount() {}
 
 export function sendEther(destination, amount) {
   return async dispatch => {

@@ -23,7 +23,7 @@ export function getWeb3() {
   });
 }
 
-export function getWalletAddress() {
+export function getAccountAddress() {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
     web3.eth.getCoinbase((err, address) => {
@@ -38,20 +38,20 @@ export function getWalletAddress() {
   });
 }
 
-export function getWalletInfo() {
+export function getAccountInfo() {
   return new Promise(async (resolve, reject) => {
-    const walletAddress = await getWalletAddress();
+    const accountAddress = await getAccountAddress();
     const balance = await getEtherBalance();
-    resolve({ walletAddress, balance });
+    resolve({ accountAddress, balance });
   });
 }
 
 export function getEtherBalance() {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
-    const walletAddress = await getWalletAddress();
+    const accountAddress = await getAccountAddress();
     // get balance
-    web3.eth.getBalance(walletAddress, (err, wei) => {
+    web3.eth.getBalance(accountAddress, (err, wei) => {
       if (err) {
         reject(err);
       }
@@ -63,10 +63,10 @@ export function getEtherBalance() {
 export function sendEther(destination, amount) {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
-    const walletAddress = await getWalletAddress();
+    const accountAddress = await getAccountAddress();
     web3.eth.sendTransaction(
       {
-        from: walletAddress,
+        from: accountAddress,
         to: destination,
         value: web3.toWei(amount, "ether"),
         gas: 50000

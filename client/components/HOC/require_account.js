@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { initializeWeb3 } from "app/actions/web3";
-import { getWalletInfo } from "app/actions/wallet";
+import { getAccountInfo } from "app/actions/account";
 
 export default function(ComposedComponent) {
   @connect(
-    ({ web3, wallet }) => ({
+    ({ web3, account }) => ({
       web3,
-      wallet
+      account
     }),
     {
       initializeWeb3,
-      getWalletInfo
+      getAccountInfo
     }
   )
-  class HasWallet extends Component {
+  class HasAccount extends Component {
     static contextTypes = {
       router: PropTypes.object
     };
@@ -30,11 +30,11 @@ export default function(ComposedComponent) {
       if (!nextProps.web3) {
         this.context.router.push("/missing-web3");
       }
-      if (nextProps.wallet.walletFound === null) {
-        this.props.getWalletInfo();
+      if (nextProps.account.accountFound === null) {
+        this.props.getAccountInfo();
       }
-      if (nextProps.wallet.walletFound === false) {
-        this.context.router.push("/missing-wallet");
+      if (nextProps.account.accountFound === false) {
+        this.context.router.push("/missing-account");
       }
     }
 
@@ -43,5 +43,5 @@ export default function(ComposedComponent) {
     }
   }
 
-  return HasWallet;
+  return HasAccount;
 }

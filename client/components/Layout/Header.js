@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getWalletInfo } from "../../actions/wallet";
+import { getAccountInfo } from "../../actions/account";
 
-@connect(({ wallet }) => ({ wallet }), { getWalletInfo })
+@connect(({ account }) => ({ account }), { getAccountInfo })
 export default class Header extends Component {
   render() {
-    var etherBalance = this.props.wallet.etherBalance
-      ? this.props.wallet.etherBalance.toFixed(3)
+    var etherBalance = this.props.account.etherBalance
+      ? this.props.account.etherBalance.toFixed(3)
       : 0;
     return (
       <header>
@@ -14,10 +14,10 @@ export default class Header extends Component {
           <div className="logo">
             <h1>Multisig</h1>
           </div>
-          <div className="wallet">
+          <div className="account">
             <p>
-              <span>Wallet Address:</span>
-              <span className="address">{this.props.wallet.address}</span>
+              <span>Account Address:</span>
+              <span className="address">{this.props.account.address}</span>
             </p>
           </div>
           <div className="balances">

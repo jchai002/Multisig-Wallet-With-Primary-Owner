@@ -5,18 +5,18 @@ import {
 
 export default function(
   state = {
-    walletFound: null,
+    accountFound: null,
     address: null,
     etherBalance: null
   },
   action
 ) {
   if (action.type === GET_WALLET_INFO_SUCCESS) {
-    return { walletFound: true, ...action.payload };
+    return { accountFound: true, ...action.payload };
   }
 
   if (action.type === GET_WALLET_INFO_FAIL) {
-    return { walletFound: false };
+    return { accountFound: false };
   }
 
   return state;

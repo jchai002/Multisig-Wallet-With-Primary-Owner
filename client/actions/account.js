@@ -2,12 +2,12 @@ import {
   GET_WALLET_INFO_SUCCESS,
   GET_WALLET_INFO_FAIL
 } from "app/constants/ActionTypes";
-import { getWalletAddress, getEtherBalance } from "app/util/web3";
+import { getAccountAddress, getEtherBalance } from "app/util/web3";
 
-export function getWalletInfo() {
+export function getAccountInfo() {
   return async dispatch => {
     try {
-      var address = await getWalletAddress();
+      var address = await getAccountAddress();
     } catch (e) {
       console.error(e);
       dispatch({

@@ -8,7 +8,7 @@ import { sendEther } from "app/actions/transaction";
   }),
   { sendEther }
 )
-export default class Wallet extends Component {
+export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = { destination: "", amount: "" };
