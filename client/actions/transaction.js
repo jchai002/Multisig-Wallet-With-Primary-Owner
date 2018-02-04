@@ -1,4 +1,4 @@
-import * as promisedWeb3 from "app/util/web3";
+import * as web3Utils from "app/util/web3";
 import axios from "axios";
 const api = axios.create({ baseURL: "/v1" });
 const contract = require("truffle-contract");
@@ -19,10 +19,18 @@ export function submitTransaction(destination, amount) {
     var transaction = await wallet.submitTransaction(destination, amount, "", {
       from: sender
     });
-    var tx_hash = transaction.tx;
-    var response = await api.post("/transactions", { tx_hash });
+    var { tx } = transaction;
+    var transactionId = web3Utils.getParamFromTxEvent(
+      transaction,
+      "transactionId",
+      "Submission"
+    );
 
-    // let tx_hash = await promisedWeb3.sendEther(destination, amount);
+    console.log(transactionId);
+
+    // var response = await api.post("/transactions", { tx });
+
+    // let tx_hash = await web3Utils.sendEther(destination, amount);
     // console.log(tx_hash);
   };
 }

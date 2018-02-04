@@ -41,15 +41,14 @@ export function getAccountAddress() {
 export function getAccountInfo() {
   return new Promise(async (resolve, reject) => {
     const accountAddress = await getAccountAddress();
-    const balance = await getEtherBalance();
+    const balance = await getEtherBalance(accountAddress);
     resolve({ accountAddress, balance });
   });
 }
 
-export function getEtherBalance() {
+export function getEtherBalance(accountAddress) {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
-    const accountAddress = await getAccountAddress();
     // get balance
     web3.eth.getBalance(accountAddress, (err, wei) => {
       if (err) {
@@ -60,23 +59,10 @@ export function getEtherBalance() {
   });
 }
 
-export function sendEther(destination, amount) {
-  return new Promise(async (resolve, reject) => {
-    const web3 = store.getState().web3;
-    const accountAddress = await getAccountAddress();
-    web3.eth.sendTransaction(
-      {
-        from: accountAddress,
-        to: destination,
-        value: web3.toWei(amount, "ether"),
-        gas: 50000
-      },
-      async (err, tx_hash) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(tx_hash);
-      }
-    );
-  });
+export function getParamFromTxEvent(transaction, paramName, eventName) {
+  let logs = transaction.logs;
+  if (eventName != null) {
+    logs = logs.filter(l => l.event === eventName);
+  }
+  return logs[0].args[paramName];
 }

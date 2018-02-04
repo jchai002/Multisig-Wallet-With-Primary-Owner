@@ -11,7 +11,10 @@ import { submitTransaction } from "app/actions/transaction";
 export default class Account extends Component {
   constructor(props) {
     super(props);
-    this.state = { destination: "", amount: "" };
+    this.state = {
+      destination: "0xc2dbc0a6b68d6148d80273ce4d6667477dbf2aa7",
+      amount: "1"
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
