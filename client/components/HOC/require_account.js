@@ -27,14 +27,11 @@ export default function(ComposedComponent) {
     }
 
     componentWillReceiveProps(nextProps) {
-      if (!nextProps.web3) {
-        this.context.router.push("/missing-web3");
+      if (!nextProps.web3 || nextProps.account.accountFound === false) {
+        this.context.router.push("/missing-account");
       }
       if (nextProps.account.accountFound === null) {
         this.props.getAccountInfo();
-      }
-      if (nextProps.account.accountFound === false) {
-        this.context.router.push("/missing-account");
       }
     }
 

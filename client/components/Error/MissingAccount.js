@@ -36,10 +36,20 @@ export default class MissingAccount extends Component {
     return (
       <div className="unauthenticated">
         <p>
-          Please login with{" "}
+          Please login with the{" "}
           <a className="link" href="https://metamask.io/">
             MetaMask
-          </a>
+          </a>{" "}
+          Chrome Extension.
+        </p>
+        <p>
+          If you don't have it installed, you can{" "}
+          <a
+            href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
+            className="link"
+          >
+            download it here
+          </a>.
         </p>
       </div>
     );

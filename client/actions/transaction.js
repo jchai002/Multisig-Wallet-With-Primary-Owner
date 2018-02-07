@@ -9,6 +9,7 @@ import {
 
 export function submitTransaction(destination, amount) {
   return async dispatch => {
+    console.log("submitTransaction");
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
     const wallet = await getWallet();
