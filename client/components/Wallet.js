@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { submitTransaction } from "app/actions/transaction";
+import { submitTransaction } from "app/actions/transactions";
 
 @connect(
   ({ transactions }) => ({

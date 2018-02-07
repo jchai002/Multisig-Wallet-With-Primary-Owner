@@ -24,11 +24,6 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
     const confirmationStatus = await blockchain.getConfirmationStatus(
       transactionId
     );
-
-    // var dateConfirmed = null;
-    // if (confirmationStatus) {
-    //   dateConfirmed = Date.now();
-    // }
     var dateConfirmed = null;
     if (confirmationStatus) {
       dateConfirmed = Date.now();
@@ -44,7 +39,6 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
       },
       { new: true }
     ).exec();
-    console.log("updatedTransaction", updatedTransaction);
     res.send(updatedTransaction);
   } catch (err) {
     console.log(err);
@@ -83,12 +77,10 @@ routes.post("/transactions", async (req, res) => {
     const confirmationStatus = await blockchain.getConfirmationStatus(
       transactionId
     );
-
     var dateConfirmed = null;
     if (confirmationStatus) {
       dateConfirmed = Date.now();
     }
-
     var newTransaction = new Transaction({
       transactionId,
       transactionHash: transaction.tx,
@@ -98,7 +90,7 @@ routes.post("/transactions", async (req, res) => {
       dateConfirmed: null
     });
     await newTransaction.save();
-    res.send(null);
+    res.send(newTransaction);
   } catch (err) {
     console.log(err);
     res.status(422).send(err);

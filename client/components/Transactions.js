@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getTransactions, confirmTransaction } from "app/actions/transaction";
+import { getTransactions, confirmTransaction } from "app/actions/transactions";
 import moment from "moment";
 
-@connect(({ transaction }) => ({ transaction }), {
+@connect(({ transactions }) => ({ transactions }), {
   getTransactions,
   confirmTransaction
 })
@@ -18,8 +18,7 @@ export default class Transactions extends Component {
   }
 
   renderTransactions() {
-    const { foundTransactions } = this.props.transaction;
-    return foundTransactions.map(transaction => {
+    return this.props.transactions.map(transaction => {
       const {
         transactionId,
         dateSubmitted,
@@ -62,7 +61,7 @@ export default class Transactions extends Component {
   }
 
   render() {
-    if (!this.props.transaction) return null;
+    if (!this.props.transactions) return null;
     return (
       <div>
         <h1>Transactions</h1>

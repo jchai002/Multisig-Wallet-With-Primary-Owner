@@ -4,7 +4,11 @@ const api = axios.create({ baseURL: "/v1" });
 import { getWallet } from "app/util/contract";
 import {
   GET_TRANSACTIONS_SUCCESS,
-  SUBMIT_TRANSACTION_SUCCESS
+  GET_TRANSACTIONS_FAIL,
+  SUBMIT_TRANSACTION_SUCCESS,
+  SUBMIT_TRANSACTION_FAIL,
+  CONFIRM_TRANSACTION_SUCCESS,
+  CONFIRM_TRANSACTION_FAIL
 } from "app/constants/ActionTypes";
 
 export function submitTransaction(destination, amount) {
@@ -21,15 +25,27 @@ export function submitTransaction(destination, amount) {
       }
     );
     const response = await api.post("/transactions", { transaction });
-    dispatch({ type: SUBMIT_TRANSACTION_SUCCESS });
+    if (response.status == 200) {
+      return dispatch({
+        type: SUBMIT_TRANSACTION_SUCCESS,
+        payload: response.data
+      });
+    } else {
+      return dispatch({ type: SUBMIT_TRANSACTION_FAIL });
+    }
   };
 }
 
 export function getTransactions() {
   return async dispatch => {
     const response = await api.get("/transactions");
-    if (response.data) {
-      dispatch({ type: GET_TRANSACTIONS_SUCCESS, payload: response.data });
+    if (response.status == 200) {
+      return dispatch({
+        type: GET_TRANSACTIONS_SUCCESS,
+        payload: response.data
+      });
+    } else {
+      return dispatch({ type: GET_TRANSACTIONS_FAIL });
     }
   };
 }
@@ -45,6 +61,13 @@ export function confirmTransaction(transactionId) {
     const response = await api.put(`/transactions/${transactionId}/confirm`, {
       transaction
     });
-    console.log("update response", response);
+    if (response.status == 200) {
+      return dispatch({
+        type: CONFIRM_TRANSACTION_SUCCESS,
+        payload: response.data
+      });
+    } else {
+      return dispatch({ type: CONFIRM_TRANSACTION_FAIL });
+    }
   };
 }
