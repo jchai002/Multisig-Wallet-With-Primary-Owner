@@ -12,11 +12,44 @@ routes.get("/cleardb", (req, res) => {
 });
 
 routes.put("/transactions/:transactionId/confirm", async (req, res) => {
-  console.log("/transactions/:transactionId/confirm");
   const { transactionId } = req.params;
-  const transaction = await Transaction.findOne({ transactionId });
-  console.log("transaction", transaction);
-  res.send(null);
+  const { transaction } = req.body;
+  const result = await blockchain.pollForTransactionState(transaction.tx);
+  // check for result status before getting transactionId
+  if (false) {
+    res.status(422).send("error: block failed to be mined");
+  }
+  try {
+    const confirmations = await blockchain.getConfirmations(transactionId);
+    const confirmationStatus = await blockchain.getConfirmationStatus(
+      transactionId
+    );
+
+    // var dateConfirmed = null;
+    // if (confirmationStatus) {
+    //   dateConfirmed = Date.now();
+    // }
+    var dateConfirmed = null;
+    if (confirmationStatus) {
+      dateConfirmed = Date.now();
+    }
+    var updatedTransaction = await Transaction.findOneAndUpdate(
+      {
+        transactionId
+      },
+      {
+        confirmedBy: confirmations,
+        confirmed: confirmationStatus,
+        dateConfirmed
+      },
+      { new: true }
+    ).exec();
+    console.log("updatedTransaction", updatedTransaction);
+    res.send(updatedTransaction);
+  } catch (err) {
+    console.log(err);
+    res.status(422).send(err);
+  }
 });
 
 routes.get("/transactions/:id", async (req, res) => {
@@ -26,6 +59,9 @@ routes.get("/transactions/:id", async (req, res) => {
 });
 
 routes.get("/transactions", async (req, res) => {
+  // Transaction.collection.remove();
+  // console.log("Transaction collection remove");
+  // res.send(null);
   const transactions = await Transaction.find();
   res.send(transactions);
 });
@@ -43,24 +79,28 @@ routes.post("/transactions", async (req, res) => {
       "transactionId",
       "Submission"
     );
-    const sender = utils.getParamFromTxEvent(
-      transaction,
-      "sender",
-      "Confirmation"
+    const confirmations = await blockchain.getConfirmations(transactionId);
+    const confirmationStatus = await blockchain.getConfirmationStatus(
+      transactionId
     );
-    const newTransaction = new Transaction({
+
+    var dateConfirmed = null;
+    if (confirmationStatus) {
+      dateConfirmed = Date.now();
+    }
+
+    var newTransaction = new Transaction({
       transactionId,
       transactionHash: transaction.tx,
-      confirmedBy: [sender],
-      confirmed: false,
+      confirmedBy: confirmations,
+      confirmed: confirmationStatus,
       dateSubmitted: Date.now(),
       dateConfirmed: null
     });
     await newTransaction.save();
-
-    console.log("newTransaction", newTransaction);
-    res.send(newTransaction);
+    res.send(null);
   } catch (err) {
+    console.log(err);
     res.status(422).send(err);
   }
 });

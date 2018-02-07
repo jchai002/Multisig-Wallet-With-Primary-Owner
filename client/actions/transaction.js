@@ -36,6 +36,15 @@ export function getTransactions() {
 
 export function confirmTransaction(transactionId) {
   return async dispatch => {
-    const response = await api.put(`/transactions/${transactionId}/confirm`);
+    const web3 = web3Utils.storedWeb3();
+    const sender = web3.eth.accounts[0];
+    const wallet = await getWallet();
+    const transaction = await wallet.confirmTransaction(transactionId, {
+      from: sender
+    });
+    const response = await api.put(`/transactions/${transactionId}/confirm`, {
+      transaction
+    });
+    console.log("update response", response);
   };
 }

@@ -2,6 +2,34 @@ const Web3 = require("web3");
 const web3 = new Web3(
   new Web3.providers.HttpProvider(process.env.WEB3_PROVIDER)
 );
+const contract = require("truffle-contract");
+const Wallet = require("../../build/contracts/MultiSigWallet.json");
+const _ = require("lodash");
+
+async function getWallet() {
+  const WalletContract = contract(Wallet);
+  WalletContract.setProvider(web3.currentProvider);
+  return await WalletContract.deployed();
+}
+
+async function getConfirmations(transactionId) {
+  const wallet = await getWallet();
+  return await wallet.getConfirmations(transactionId);
+}
+
+async function getConfirmationStatus(transactionId) {
+  const wallet = await getWallet();
+  const requiredCount = await wallet.required();
+  const primaryOwner = await wallet.primaryOwner();
+  const confirmations = await getConfirmations(transactionId);
+  if (
+    confirmations.length >= requiredCount &&
+    _.includes(confirmations, primaryOwner)
+  ) {
+    return true;
+  }
+  return false;
+}
 
 function getTransanctionStatus(tx) {
   return new Promise((resolve, reject) => {
@@ -37,4 +65,10 @@ function getParamFromTxEvent(transaction, paramName, eventName) {
   return logs[0].args[paramName];
 }
 
-module.exports = { pollForTransactionState, getParamFromTxEvent };
+module.exports = {
+  pollForTransactionState,
+  getParamFromTxEvent,
+  getWallet,
+  getConfirmations,
+  getConfirmationStatus
+};
