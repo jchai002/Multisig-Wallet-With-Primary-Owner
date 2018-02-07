@@ -9,7 +9,6 @@ import {
 
 export function submitTransaction(destination, amount) {
   return async dispatch => {
-    console.log("submitTransaction");
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
     const wallet = await getWallet();
@@ -32,5 +31,11 @@ export function getTransactions() {
     if (response.data) {
       dispatch({ type: GET_TRANSACTIONS_SUCCESS, payload: response.data });
     }
+  };
+}
+
+export function confirmTransaction(transactionId) {
+  return async dispatch => {
+    const response = await api.put(`/transactions/${transactionId}/confirm`);
   };
 }
