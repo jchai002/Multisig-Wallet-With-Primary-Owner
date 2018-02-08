@@ -14,11 +14,14 @@ export default class Transactions extends Component {
   }
 
   componentWillMount() {
-    this.props.getTransactions();
+    var { page } = this.props.routeParams;
+    page = page || "1";
+    this.props.getTransactions(page);
   }
 
   renderTransactions() {
-    return this.props.transactions.map(transaction => {
+    console.log(this.props.transactions);
+    return this.props.transactions.transactionsOnPage.map(transaction => {
       const {
         transactionId,
         dateSubmitted,

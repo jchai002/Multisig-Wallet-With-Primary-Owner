@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 const { Schema } = mongoose;
 
 const transactionSchema = new Schema({
@@ -9,5 +10,7 @@ const transactionSchema = new Schema({
   dateSubmitted: Date,
   dateConfirmed: Date
 });
+
+transactionSchema.plugin(mongoosePaginate);
 
 mongoose.model("transactions", transactionSchema);

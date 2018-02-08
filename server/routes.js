@@ -46,18 +46,13 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
   }
 });
 
-routes.get("/transactions/:id", async (req, res) => {
-  const { id } = req.params;
-  const transactions = await Transaction.findOne({ _id: id });
-  res.send(null);
-});
-
-routes.get("/transactions", async (req, res) => {
-  // Transaction.collection.remove();
-  // console.log("Transaction collection remove");
-  // res.send(null);
-  const transactions = await Transaction.find();
-  res.send(transactions);
+routes.get("/transactions/:page", async (req, res) => {
+  const { page } = req.params;
+  const results = await Transaction.paginate(
+    {},
+    { page, limit: 5, sort: { transactionId: -1 } }
+  );
+  res.send({ transactionsOnPage: results.docs, pageNumber: results.page });
 });
 
 routes.post("/transactions", async (req, res) => {

@@ -27,6 +27,10 @@ ReactDOM.render(
         <Route path="missing-account" component={MissingAccount} />
         <Route path="settings" component={requireAccount(Settings)} />
         <Route path="transactions" component={requireAccount(Transactions)} />
+        <Route
+          path="transactions/:page"
+          component={requireAccount(Transactions)}
+        />
       </Route>
     </Router>
   </Provider>,

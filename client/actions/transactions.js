@@ -25,7 +25,7 @@ export function submitTransaction(destination, amount) {
       }
     );
     const response = await api.post("/transactions", { transaction });
-    if (response.status == 200) {
+    if (response.status === 200) {
       return dispatch({
         type: SUBMIT_TRANSACTION_SUCCESS,
         payload: response.data
@@ -36,10 +36,10 @@ export function submitTransaction(destination, amount) {
   };
 }
 
-export function getTransactions() {
+export function getTransactions(page) {
   return async dispatch => {
-    const response = await api.get("/transactions");
-    if (response.status == 200) {
+    const response = await api.get("/transactions/" + Number(page));
+    if (response.status === 200) {
       return dispatch({
         type: GET_TRANSACTIONS_SUCCESS,
         payload: response.data
@@ -61,7 +61,7 @@ export function confirmTransaction(transactionId) {
     const response = await api.put(`/transactions/${transactionId}/confirm`, {
       transaction
     });
-    if (response.status == 200) {
+    if (response.status === 200) {
       return dispatch({
         type: CONFIRM_TRANSACTION_SUCCESS,
         payload: response.data
