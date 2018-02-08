@@ -36,20 +36,6 @@ export function submitTransaction(destination, amount) {
   };
 }
 
-export function getTransactions(page) {
-  return async dispatch => {
-    const response = await api.get("/transactions/" + Number(page));
-    if (response.status === 200) {
-      return dispatch({
-        type: GET_TRANSACTIONS_SUCCESS,
-        payload: response.data
-      });
-    } else {
-      return dispatch({ type: GET_TRANSACTIONS_FAIL });
-    }
-  };
-}
-
 export function confirmTransaction(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
@@ -68,6 +54,20 @@ export function confirmTransaction(transactionId) {
       });
     } else {
       return dispatch({ type: CONFIRM_TRANSACTION_FAIL });
+    }
+  };
+}
+
+export function getTransactions(page) {
+  return async dispatch => {
+    const response = await api.get("/transactions/" + Number(page));
+    if (response.status === 200) {
+      return dispatch({
+        type: GET_TRANSACTIONS_SUCCESS,
+        payload: response.data
+      });
+    } else {
+      return dispatch({ type: GET_TRANSACTIONS_FAIL });
     }
   };
 }

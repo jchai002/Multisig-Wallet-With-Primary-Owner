@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAccountInfo } from "../../actions/account";
+import { Link } from "react-router";
 
 @connect(({ account }) => ({ account }), { getAccountInfo })
 export default class Header extends Component {
@@ -12,7 +13,9 @@ export default class Header extends Component {
       <header>
         <div className="nav-desktop">
           <div className="logo">
-            <h1>Multisig</h1>
+            <h1>
+              <Link to={"/"}>Multisig</Link>
+            </h1>
           </div>
           <div className="account">
             <p>

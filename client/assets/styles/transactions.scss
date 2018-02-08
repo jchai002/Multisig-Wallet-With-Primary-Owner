@@ -1,0 +1,36 @@
+.transactions-page {
+  .table-header,
+  .table-footer {
+    background-color: $primary-1;
+    padding: $space-lg;
+    color: $white;
+  }
+  .table-header {
+    border-top-left-radius: $space-sm;
+    border-top-right-radius: $space-sm;
+  }
+  .table-footer {
+    border-bottom-left-radius: $space-sm;
+    border-bottom-right-radius: $space-sm;
+    a {
+      color: $white;
+      margin-right: $space-md;
+      &.disabled {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    }
+  }
+  .table-body {
+    border-radius: 0;
+    padding: 0 $space-lg;
+    border-left: 1px solid $gray-1;
+    border-right: 1px solid $gray-1;
+    .table-row {
+      padding: 24px 0;
+      &:not(:last-of-type) {
+        border-bottom: 1px solid $gray-1;
+      }
+    }
+  }
+}

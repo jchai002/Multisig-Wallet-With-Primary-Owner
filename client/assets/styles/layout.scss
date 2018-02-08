@@ -1,5 +1,13 @@
 header {
   border-bottom: 1px solid $divider-color;
+  .logo a {
+    color: $primary-1;
+    text-decoration: none;
+    &:hover,
+    &:visited {
+      text-decoration: none;
+    }
+  }
   .nav-desktop {
     width: 100%;
     color: $primary-1;
@@ -36,6 +44,18 @@ main {
   margin: $space-lg 0;
 }
 
+.page-wrapper {
+  h2 {
+    margin: $space-lg 0;
+  }
+}
+
+.content-wrapper {
+  border-radius: $space-sm;
+  border: 1px solid $gray-1;
+  padding: $space-lg;
+}
+
 p {
   margin: 0;
 }
@@ -48,33 +68,4 @@ p {
 .address,
 .link {
   color: $accent;
-}
-
-.payment .payment__box {
-  margin: $space-xl 0;
-  padding: $space-lg;
-  box-shadow: 2px 3px 10px 2px rgba(16, 28, 64, 0.1);
-  .eth-logo {
-    height: $space-lg;
-  }
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  h2 {
-    font-size: 32px;
-    line-height: 1.2;
-    margin-bottom: $space-lg;
-  }
-  p {
-    margin: $space-md 0;
-  }
-  .message {
-    font-size: 18px;
-    line-height: 1.4;
-    letter-spacing: 1px;
-  }
-  .buttons {
-    margin-top: $space-xl;
-  }
 }

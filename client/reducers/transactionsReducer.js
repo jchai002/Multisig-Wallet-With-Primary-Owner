@@ -17,7 +17,11 @@ export default function(state = null, action) {
     });
     var transactionsOnPage = [...state.transactionsOnPage];
     transactionsOnPage[indexToUpdate] = action.payload;
-    return { transactionsOnPage, pageNumber: state.pageNumber };
+    return {
+      transactionsOnPage,
+      pageNumber: state.pageNumber,
+      totalPages: state.totalPages
+    };
   }
 
   return state;

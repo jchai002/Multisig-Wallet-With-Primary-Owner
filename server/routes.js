@@ -52,7 +52,11 @@ routes.get("/transactions/:page", async (req, res) => {
     {},
     { page, limit: 5, sort: { transactionId: -1 } }
   );
-  res.send({ transactionsOnPage: results.docs, pageNumber: results.page });
+  res.send({
+    transactionsOnPage: results.docs,
+    pageNumber: results.page,
+    totalPages: results.pages
+  });
 });
 
 routes.post("/transactions", async (req, res) => {
