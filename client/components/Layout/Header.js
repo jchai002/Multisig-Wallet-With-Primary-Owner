@@ -12,21 +12,28 @@ export default class Header extends Component {
     return (
       <header>
         <div className="nav-desktop">
-          <div className="logo">
-            <h1>
-              <Link to={"/"}>Multisig</Link>
-            </h1>
+          <div className="info">
+            <div className="logo">
+              <h5>
+                <Link to={"/"}>Multisig</Link>
+              </h5>
+            </div>
+            <div className="account">
+              <p>
+                <span>Account Address:</span>
+                <span className="address">{this.props.account.address}</span>
+              </p>
+            </div>
+            <div className="balances">
+              <p>
+                ETH: <span className="amount">{etherBalance}</span>
+              </p>
+            </div>
           </div>
-          <div className="account">
-            <p>
-              <span>Account Address:</span>
-              <span className="address">{this.props.account.address}</span>
-            </p>
-          </div>
-          <div className="balances">
-            <p>
-              ETH: <span className="amount">{etherBalance}</span>
-            </p>
+          <div className="menu">
+            <Link to="/">new</Link>
+            <Link to="/transactions">transactions</Link>
+            <Link to="/settings">settings</Link>
           </div>
         </div>
       </header>

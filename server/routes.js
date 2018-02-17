@@ -47,6 +47,9 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
 });
 
 routes.get("/transactions/:page", async (req, res) => {
+  // Transaction.collection.remove();
+  // console.log("Transaction collection remove");
+  // res.send(null);
   const { page } = req.params;
   const results = await Transaction.paginate(
     {},

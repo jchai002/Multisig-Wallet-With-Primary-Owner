@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getTransactions, confirmTransaction } from "app/actions/transactions";
 import moment from "moment";
 import { Link } from "react-router";
+import _ from "lodash";
 
 @connect(({ transactions, account }) => ({ transactions, account }), {
   getTransactions,
@@ -38,29 +39,37 @@ export default class Transactions extends Component {
         confirmedBy,
         confirmed
       } = transaction;
-
-      var button;
+      const currentAccountAddress = this.props.account.address;
+      var button = (
+        <button className="btn btn-primary disabled" disabled>
+          N/A
+        </button>
+      );
       if (!confirmed) {
-        button = (
-          <button
-            className="btn btn-primary"
-            onClick={() => this.props.confirmTransaction(transactionId)}
-          >
-            Confirm
-          </button>
-        );
-      } else {
-        button = (
-          <button className="btn btn-primary disabled" disabled>
-            N/A
-          </button>
-        );
+        if (_.includes(confirmedBy, currentAccountAddress)) {
+          button = (
+            <button
+              className="btn btn-primary"
+              onClick={() => this.props.confirmTransaction(transactionId)}
+            >
+              Revoke
+            </button>
+          );
+        } else {
+          button = (
+            <button
+              className="btn btn-primary"
+              onClick={() => this.props.confirmTransaction(transactionId)}
+            >
+              Confirm
+            </button>
+          );
+        }
       }
 
       var confirmationStatus = confirmed ? "Yes" : "No";
 
       var confirmedByDisplay = [];
-      const currentAccountAddress = this.props.account.address;
       confirmedBy.map(addr => {
         if (addr === currentAccountAddress) {
           confirmedByDisplay.push("current account");

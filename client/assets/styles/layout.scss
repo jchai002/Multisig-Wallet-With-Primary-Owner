@@ -1,17 +1,20 @@
 header {
   border-bottom: 1px solid $divider-color;
-  .logo a {
-    color: $primary-1;
-    text-decoration: none;
-    &:hover,
-    &:visited {
+  .logo {
+    a {
+      color: $primary-1;
+      padding: $space-md 0;
       text-decoration: none;
+      &:hover,
+      &:visited {
+        text-decoration: none;
+      }
     }
   }
   .nav-desktop {
     width: 100%;
+    height: 96px;
     color: $primary-1;
-    height: 72px;
     padding: 0 $space-lg;
     display: flex;
     align-items: center;
@@ -28,9 +31,14 @@ header {
       margin-right: $space-xs;
     }
   }
-  .balances {
+  .menu {
     display: flex;
-    flex-direction: column;
+    a {
+      @include link-style($primary-1);
+      &:not(:last-of-type) {
+        margin-right: $space-md;
+      }
+    }
   }
 }
 

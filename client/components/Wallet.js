@@ -27,7 +27,7 @@ export default class Wallet extends Component {
   render() {
     return (
       <div className="wallet-page page-wrapper">
-        <h2>Submit Transaction</h2>
+        <h2>Submit New Transaction</h2>
 
         <div className="content-wrapper">
           <form onSubmit={this.handleSubmit}>

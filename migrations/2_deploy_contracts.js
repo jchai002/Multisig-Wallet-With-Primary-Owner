@@ -10,7 +10,7 @@ module.exports = deployer => {
   ];
   const sigsRequired = 2;
 
-  deployer.deploy(Wallet, owners, sigsRequired);
+  return deployer.deploy(Wallet, owners, sigsRequired);
   console.log("Wallet deployed");
   console.log("Owners:", owners);
   console.log("Number of Signatures Required:", sigsRequired);
