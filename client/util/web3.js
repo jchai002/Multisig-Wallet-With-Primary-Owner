@@ -70,3 +70,15 @@ export function getParamFromTxEvent(transaction, paramName, eventName) {
   }
   return logs[0].args[paramName];
 }
+
+export function getGasPrice() {
+  return new Promise(async (resolve, reject) => {
+    const web3 = store.getState().web3;
+    web3.eth.getGasPrice((err, wei) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(wei);
+    });
+  });
+}

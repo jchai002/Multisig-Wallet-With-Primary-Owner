@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getTransactions, confirmTransaction } from "app/actions/transactions";
+import {
+  getTransactions,
+  confirmTransaction,
+  revokeConfirmation
+} from "app/actions/transactions";
 import moment from "moment";
 import { Link } from "react-router";
 import _ from "lodash";
 
 @connect(({ transactions, account }) => ({ transactions, account }), {
   getTransactions,
-  confirmTransaction
+  confirmTransaction,
+  revokeConfirmation
 })
 export default class Transactions extends Component {
   constructor(props) {
@@ -50,7 +55,7 @@ export default class Transactions extends Component {
           button = (
             <button
               className="btn btn-primary"
-              onClick={() => this.props.confirmTransaction(transactionId)}
+              onClick={() => this.props.revokeConfirmation(transactionId)}
             >
               Revoke
             </button>

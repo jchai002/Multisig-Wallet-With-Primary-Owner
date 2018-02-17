@@ -46,6 +46,41 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
   }
 });
 
+routes.put("/transactions/:transactionId/revoke", async (req, res) => {
+  const { transactionId } = req.params;
+  const { transaction } = req.body;
+  const result = await blockchain.pollForTransactionState(transaction.tx);
+  // check for result status before getting transactionId
+  if (false) {
+    res.status(422).send("error: block failed to be mined");
+  }
+  try {
+    const confirmations = await blockchain.getConfirmations(transactionId);
+    const confirmationStatus = await blockchain.getConfirmationStatus(
+      transactionId
+    );
+    var dateConfirmed = null;
+    if (confirmationStatus) {
+      dateConfirmed = Date.now();
+    }
+    var updatedTransaction = await Transaction.findOneAndUpdate(
+      {
+        transactionId
+      },
+      {
+        confirmedBy: confirmations,
+        confirmed: confirmationStatus,
+        dateConfirmed
+      },
+      { new: true }
+    ).exec();
+    res.send(updatedTransaction);
+  } catch (err) {
+    console.log(err);
+    res.status(422).send(err);
+  }
+});
+
 routes.get("/transactions/:page", async (req, res) => {
   // Transaction.collection.remove();
   // console.log("Transaction collection remove");
