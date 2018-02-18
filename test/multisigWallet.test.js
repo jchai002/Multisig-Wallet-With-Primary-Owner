@@ -15,8 +15,8 @@ contract("MultisigWallet", accounts => {
   const owner1 = accounts[0];
   const owner2 = accounts[1];
   const owner3 = accounts[2];
-  const deposit = ether(0.1);
-  const valueToSend = ether(0.01);
+  const deposit = ether(1);
+  const valueToSend = ether(0.1);
   var wallet, primaryOwner, owners;
 
   beforeEach(async () => {
@@ -36,7 +36,7 @@ contract("MultisigWallet", accounts => {
     assert.equal(balance.valueOf(), deposit);
   });
 
-  describe("Token Confirmation", function() {
+  describe("Confirmation", function() {
     it("is confirmed if confirmed by primary owner and has the correct number of confirmations", async () => {
       // submit transaction from non-primary owner
       var transaction = await wallet.submitTransaction(
@@ -106,6 +106,35 @@ contract("MultisigWallet", accounts => {
       );
       var confirmed = await wallet.isConfirmed(transactionId);
       assert.equal(confirmed, false);
+    });
+
+    it("can transfer ether to destination if confirmed", async () => {
+      // submit transaction from non-primary owner
+      var transaction = await wallet.submitTransaction(
+        owner3,
+        valueToSend,
+        null,
+        {
+          from: owner2
+        }
+      );
+      var transactionId = utils.getParamFromTxEvent(
+        transaction,
+        "transactionId",
+        null,
+        "Submission"
+      );
+      var walletBalanceBefore = await utils.balanceOf(web3, wallet.address);
+      var destBalanceBefore = await utils.balanceOf(web3, owner3);
+      var confirmation = await wallet.confirmTransaction(transactionId, {
+        from: primaryOwner
+      });
+      var walletBalanceAfter = await utils.balanceOf(web3, wallet.address);
+      var destBalanceAfter = await utils.balanceOf(web3, owner3);
+      var walletDiff = walletBalanceBefore.minus(walletBalanceAfter);
+      assert.equal(walletDiff.toNumber(), valueToSend.toNumber());
+      var destDiff = destBalanceAfter.minus(destBalanceBefore);
+      assert.equal(destDiff.toNumber(), valueToSend.toNumber());
     });
   });
 });
