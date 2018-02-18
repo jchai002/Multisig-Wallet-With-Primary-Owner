@@ -2,14 +2,19 @@ const Web3 = require("web3");
 const web3 = new Web3(
   new Web3.providers.HttpProvider(process.env.WEB3_PROVIDER)
 );
-const contract = require("truffle-contract");
+const truffle = require("truffle-contract");
 const Wallet = require("../../build/contracts/MultiSigWallet.json");
 const _ = require("lodash");
 
 async function getWallet() {
-  const WalletContract = contract(Wallet);
+  const WalletContract = truffle(Wallet);
   WalletContract.setProvider(web3.currentProvider);
   return await WalletContract.deployed();
+}
+
+async function getTransactionCount() {
+  const wallet = await getWallet();
+  return await wallet.getTransactionCount();
 }
 
 async function getConfirmations(transactionId) {
@@ -84,5 +89,6 @@ module.exports = {
   getAmount,
   getDestination,
   getConfirmations,
-  getExecutionStatus
+  getExecutionStatus,
+  getTransactionCount
 };

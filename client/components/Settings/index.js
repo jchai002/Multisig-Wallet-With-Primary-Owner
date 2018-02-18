@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getMultisig } from "app/util/contract";
+import { getMultisigTruffle } from "app/util/contract";
 import { getSettings } from "app/actions/settings";
 
 @connect(

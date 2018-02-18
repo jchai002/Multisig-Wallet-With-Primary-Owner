@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getMultisigInfo } from "../../actions/multisig";
+import { getMultisigTruffleInfo } from "../../actions/multisig";
 import { Link } from "react-router";
 
 @connect(({ multisig }) => ({ multisig }), null)

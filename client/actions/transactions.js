@@ -1,7 +1,7 @@
 import * as web3Utils from "app/util/web3";
 import axios from "axios";
 const api = axios.create({ baseURL: "/v1" });
-import { getMultisig } from "app/util/contract";
+import { getMultisigTruffle, getMultisigInstance } from "app/util/contract";
 import {
   GET_TRANSACTIONS_SUCCESS,
   GET_TRANSACTIONS_FAIL,
@@ -10,30 +10,34 @@ import {
   UPDATE_TRANSACTION_SUCCESS,
   UPDATE_TRANSACTION_FAIL
 } from "app/constants/ActionTypes";
-const maxGasToPay = 300000;
+const maxGasToPay = 600000;
 
 export function submitTransaction(destination, amount) {
   return async dispatch => {
+    console.log(destination, amount);
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const multisig = await getMultisig();
+    const multisig = await getMultisigInstance();
     const transaction = await multisig.submitTransaction(
       destination,
       web3.toWei(amount, "ether"),
       "",
       {
-        from: sender
+        from: sender,
+        gas: maxGasToPay
+      },
+      async (err, transactionHash) => {
+        const response = await api.post("/transactions", { transactionHash });
+        if (response.status === 200) {
+          return dispatch({
+            type: SUBMIT_TRANSACTION_SUCCESS,
+            payload: response.data
+          });
+        } else {
+          return dispatch({ type: SUBMIT_TRANSACTION_FAIL });
+        }
       }
     );
-    const response = await api.post("/transactions", { transaction });
-    if (response.status === 200) {
-      return dispatch({
-        type: SUBMIT_TRANSACTION_SUCCESS,
-        payload: response.data
-      });
-    } else {
-      return dispatch({ type: SUBMIT_TRANSACTION_FAIL });
-    }
   };
 }
 
@@ -41,7 +45,7 @@ export function confirmTransaction(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const multisig = await getMultisig();
+    const multisig = await getMultisigTruffle();
     const transaction = await multisig.confirmTransaction(transactionId, {
       from: sender,
       gas: maxGasToPay
@@ -64,7 +68,7 @@ export function revokeConfirmation(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const multisig = await getMultisig();
+    const multisig = await getMultisigTruffle();
     const transaction = await multisig.revokeConfirmation(transactionId, {
       from: sender,
       gas: maxGasToPay

@@ -12,8 +12,8 @@ export default class Multisig extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      destination: "",
-      amount: ""
+      destination: "0x2cdb7e99ec3db8254650e72e4d87087b4dfae176",
+      amount: "0.001"
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }

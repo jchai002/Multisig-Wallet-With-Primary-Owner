@@ -92,26 +92,22 @@ routes.get("/transactions/:page", async (req, res) => {
 });
 
 routes.post("/transactions", async (req, res) => {
-  const { transaction } = req.body;
-  const result = await blockchain.pollForTransactionState(transaction.tx);
+  const { transactionHash } = req.body;
+  // get mined transaction
+  const transaction = await blockchain.pollForTransactionState(transactionHash);
   // check for result status before getting transactionId
   if (false) {
     res.status(422).send("error: block failed to be mined");
   }
   try {
-    const transactionId = utils.getParamFromTxEvent(
-      transaction,
-      "transactionId",
-      "Submission"
-    );
+    const transactionId = parseInt(transaction.logs[0].topics[1], 16);
     const destination = await blockchain.getDestination(transactionId);
     const amount = await blockchain.getAmount(transactionId);
     const confirmedBy = await blockchain.getConfirmations(transactionId);
     const executed = await blockchain.getExecutionStatus(transactionId);
-
     var newTransaction = new Transaction({
       transactionId,
-      transactionHash: transaction.tx,
+      transactionHash,
       destination,
       amount,
       confirmedBy,

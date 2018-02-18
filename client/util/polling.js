@@ -1,11 +1,11 @@
 import store from "app/store";
 import { getAccountInfo } from "app/actions/account";
-import { getMultisigInfo } from "app/actions/multisig";
+import { getMultisigTruffleInfo } from "app/actions/multisig";
 import { getEtherBalance } from "app/util/web3";
-import { getMultisigAddress } from "app/util/contract";
+import { getMultisigTruffleAddress } from "app/util/contract";
 
 export async function pollForAccountUpdate() {
-  const multisig = await getMultisigAddress();
+  const multisig = await getMultisigTruffleAddress();
   const web3 = store.getState().web3;
   // clear existing timeouts
   var timeoutId = window.setTimeout(function() {}, 0);
@@ -21,7 +21,7 @@ export async function pollForAccountUpdate() {
       store.dispatch(getAccountInfo());
     }
     if (storedETHBalance !== multisigBalance) {
-      store.dispatch(getMultisigInfo());
+      store.dispatch(getMultisigTruffleInfo());
     }
     pollForAccountUpdate();
   }, 800);

@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { initializeWeb3 } from "app/actions/web3";
 import { getAccountInfo } from "app/actions/account";
-import { getMultisigInfo } from "app/actions/multisig";
+import { getMultisigTruffleInfo } from "app/actions/multisig";
 import { getSettings } from "app/actions/settings";
 import { pollForAccountUpdate } from "app/util/polling";
 import _ from "lodash";
@@ -19,7 +19,7 @@ export default function(ComposedComponent) {
     {
       initializeWeb3,
       getAccountInfo,
-      getMultisigInfo,
+      getMultisigTruffleInfo,
       getSettings
     }
   )
@@ -42,7 +42,7 @@ export default function(ComposedComponent) {
         this.props.getAccountInfo();
       }
       if (nextProps.multisig.contractFound === null) {
-        this.props.getMultisigInfo();
+        this.props.getMultisigTruffleInfo();
       }
       if (nextProps.settings === null) {
         this.props.getSettings();
