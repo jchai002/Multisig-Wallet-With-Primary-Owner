@@ -8,9 +8,9 @@ const transactionSchema = new Schema({
   destination: String,
   amount: Number,
   confirmedBy: Array,
-  confirmed: Boolean,
+  executed: Boolean,
   dateSubmitted: Date,
-  dateConfirmed: Date
+  dateExecuted: Date
 });
 
 transactionSchema.plugin(mongoosePaginate);

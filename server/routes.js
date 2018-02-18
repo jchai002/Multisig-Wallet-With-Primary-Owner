@@ -21,12 +21,10 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
   }
   try {
     const confirmations = await blockchain.getConfirmations(transactionId);
-    const confirmationStatus = await blockchain.getConfirmationStatus(
-      transactionId
-    );
-    var dateConfirmed = null;
-    if (confirmationStatus) {
-      dateConfirmed = Date.now();
+    const executionStatus = await blockchain.getExecutionStatus(transactionId);
+    var dateExecuted = null;
+    if (executionStatus) {
+      dateExecuted = Date.now();
     }
     var updatedTransaction = await Transaction.findOneAndUpdate(
       {
@@ -34,8 +32,8 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
       },
       {
         confirmedBy: confirmations,
-        confirmed: confirmationStatus,
-        dateConfirmed
+        executed: executionStatus,
+        dateExecuted
       },
       { new: true }
     ).exec();
@@ -56,12 +54,10 @@ routes.put("/transactions/:transactionId/revoke", async (req, res) => {
   }
   try {
     const confirmations = await blockchain.getConfirmations(transactionId);
-    const confirmationStatus = await blockchain.getConfirmationStatus(
-      transactionId
-    );
-    var dateConfirmed = null;
-    if (confirmationStatus) {
-      dateConfirmed = Date.now();
+    const executionStatus = await blockchain.getExecutionStatus(transactionId);
+    var dateExecuted = null;
+    if (executionStatus) {
+      dateExecuted = Date.now();
     }
     var updatedTransaction = await Transaction.findOneAndUpdate(
       {
@@ -69,8 +65,8 @@ routes.put("/transactions/:transactionId/revoke", async (req, res) => {
       },
       {
         confirmedBy: confirmations,
-        confirmed: confirmationStatus,
-        dateConfirmed
+        executed: executionStatus,
+        dateExecuted
       },
       { new: true }
     ).exec();
@@ -111,12 +107,10 @@ routes.post("/transactions", async (req, res) => {
       "Submission"
     );
     const confirmations = await blockchain.getConfirmations(transactionId);
-    const confirmationStatus = await blockchain.getConfirmationStatus(
-      transactionId
-    );
-    var dateConfirmed = null;
-    if (confirmationStatus) {
-      dateConfirmed = Date.now();
+    const executionStatus = await blockchain.getExecutionStatus(transactionId);
+    var dateExecuted = null;
+    if (executionStatus) {
+      dateExecuted = Date.now();
     }
     console.log(
       "address sent to",
@@ -128,9 +122,9 @@ routes.post("/transactions", async (req, res) => {
       transactionId,
       transactionHash: transaction.tx,
       confirmedBy: confirmations,
-      confirmed: confirmationStatus,
+      executed: executionStatus,
       dateSubmitted: Date.now(),
-      dateConfirmed: null
+      dateExecuted: null
     });
     await newTransaction.save();
     res.send(newTransaction);

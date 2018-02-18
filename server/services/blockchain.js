@@ -29,7 +29,7 @@ async function getAmount(transactionId) {
   return transaction[1].toNumber();
 }
 
-async function getConfirmationStatus(transactionId) {
+async function getExecutionStatus(transactionId) {
   const wallet = await getWallet();
   const requiredCount = await wallet.required();
   const primaryOwner = await wallet.primaryOwner();
@@ -84,5 +84,5 @@ module.exports = {
   getAmount,
   getDestination,
   getConfirmations,
-  getConfirmationStatus
+  getExecutionStatus
 };

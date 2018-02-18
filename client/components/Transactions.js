@@ -40,9 +40,9 @@ export default class Transactions extends Component {
       const {
         transactionId,
         dateSubmitted,
-        dateConfirmed,
+        dateExecuted,
         confirmedBy,
-        confirmed
+        executed
       } = transaction;
       const currentAccountAddress = this.props.account.address;
       var button = (
@@ -50,7 +50,7 @@ export default class Transactions extends Component {
           N/A
         </button>
       );
-      if (!confirmed) {
+      if (!executed) {
         if (_.includes(confirmedBy, currentAccountAddress)) {
           button = (
             <button
@@ -72,7 +72,7 @@ export default class Transactions extends Component {
         }
       }
 
-      var confirmationStatus = confirmed ? "Yes" : "No";
+      var executionStatus = executed ? "Yes" : "No";
 
       var confirmedByDisplay = [];
       confirmedBy.map(addr => {
@@ -90,12 +90,10 @@ export default class Transactions extends Component {
             {moment(dateSubmitted).format("DD MMM YYYY")}
           </div>
           <div className="col-12 col-lg-2">
-            {dateConfirmed
-              ? moment(dateConfirmed).format("DD MMM YYYY")
-              : "N/A"}
+            {dateExecuted ? moment(dateExecuted).format("DD MMM YYYY") : "N/A"}
           </div>
           <div className="col-12 col-lg-3">{confirmedByDisplay.join(", ")}</div>
-          <div className="col-12 col-lg-2">{confirmationStatus}</div>
+          <div className="col-12 col-lg-2">{executionStatus}</div>
           <div className="col-12 col-lg-1">{button}</div>
         </div>
       );
