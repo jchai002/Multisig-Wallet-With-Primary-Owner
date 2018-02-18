@@ -10,11 +10,10 @@ import {
   UPDATE_TRANSACTION_SUCCESS,
   UPDATE_TRANSACTION_FAIL
 } from "app/constants/ActionTypes";
-const maxGasToPay = 600000;
+const maxGasToPay = 300000;
 
 export function submitTransaction(destination, amount) {
   return async dispatch => {
-    console.log(destination, amount);
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
     const multisig = await getMultisigInstance();
@@ -45,22 +44,30 @@ export function confirmTransaction(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const multisig = await getMultisigTruffle();
-    const transaction = await multisig.confirmTransaction(transactionId, {
-      from: sender,
-      gas: maxGasToPay
-    });
-    const response = await api.put(`/transactions/${transactionId}/confirm`, {
-      transaction
-    });
-    if (response.status === 200) {
-      return dispatch({
-        type: UPDATE_TRANSACTION_SUCCESS,
-        payload: response.data
-      });
-    } else {
-      return dispatch({ type: UPDATE_TRANSACTION_FAIL });
-    }
+    const multisig = await getMultisigInstance();
+    multisig.confirmTransaction(
+      transactionId,
+      {
+        from: sender,
+        gas: maxGasToPay
+      },
+      async (err, transactionHash) => {
+        const response = await api.put(
+          `/transactions/${transactionId}/confirm`,
+          {
+            transactionHash
+          }
+        );
+        if (response.status === 200) {
+          return dispatch({
+            type: UPDATE_TRANSACTION_SUCCESS,
+            payload: response.data
+          });
+        } else {
+          return dispatch({ type: UPDATE_TRANSACTION_FAIL });
+        }
+      }
+    );
   };
 }
 
@@ -68,23 +75,30 @@ export function revokeConfirmation(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const multisig = await getMultisigTruffle();
-    const transaction = await multisig.revokeConfirmation(transactionId, {
-      from: sender,
-      gas: maxGasToPay
-    });
-    const response = await api.put(`/transactions/${transactionId}/revoke`, {
-      transaction
-    });
-    console.log(response);
-    if (response.status === 200) {
-      return dispatch({
-        type: UPDATE_TRANSACTION_SUCCESS,
-        payload: response.data
-      });
-    } else {
-      return dispatch({ type: UPDATE_TRANSACTION_FAIL });
-    }
+    const multisig = await getMultisigInstance();
+    multisig.revokeConfirmation(
+      transactionId,
+      {
+        from: sender,
+        gas: maxGasToPay
+      },
+      async (err, transactionHash) => {
+        const response = await api.put(
+          `/transactions/${transactionId}/revoke`,
+          {
+            transactionHash
+          }
+        );
+        if (response.status === 200) {
+          return dispatch({
+            type: UPDATE_TRANSACTION_SUCCESS,
+            payload: response.data
+          });
+        } else {
+          return dispatch({ type: UPDATE_TRANSACTION_FAIL });
+        }
+      }
+    );
   };
 }
 

@@ -13,10 +13,10 @@ routes.get("/cleardb", (req, res) => {
 
 routes.put("/transactions/:transactionId/confirm", async (req, res) => {
   const { transactionId } = req.params;
-  const { transaction } = req.body;
-  const result = await blockchain.pollForTransactionState(transaction.tx);
+  const { transactionHash } = req.body;
+  const transaction = await blockchain.pollForTransactionState(transactionHash);
   // check for result status before getting transactionId
-  if (false) {
+  if (transaction.status === "0x0") {
     res.status(422).send("error: block failed to be mined");
   }
   try {
@@ -37,6 +37,8 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
       },
       { new: true }
     ).exec();
+    console.log("transaction", transaction);
+    console.log("updatedTransaction", updatedTransaction);
     res.send(updatedTransaction);
   } catch (err) {
     console.log(err);
@@ -46,10 +48,10 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
 
 routes.put("/transactions/:transactionId/revoke", async (req, res) => {
   const { transactionId } = req.params;
-  const { transaction } = req.body;
-  const result = await blockchain.pollForTransactionState(transaction.tx);
+  const { transactionHash } = req.body;
+  const transaction = await blockchain.pollForTransactionState(transactionHash);
   // check for result status before getting transactionId
-  if (false) {
+  if (transaction.status === "0x0") {
     res.status(422).send("error: block failed to be mined");
   }
   try {
@@ -70,6 +72,8 @@ routes.put("/transactions/:transactionId/revoke", async (req, res) => {
       },
       { new: true }
     ).exec();
+    console.log("transaction", transaction);
+    console.log("updatedTransaction", updatedTransaction);
     res.send(updatedTransaction);
   } catch (err) {
     console.log(err);
@@ -96,10 +100,11 @@ routes.post("/transactions", async (req, res) => {
   // get mined transaction
   const transaction = await blockchain.pollForTransactionState(transactionHash);
   // check for result status before getting transactionId
-  if (false) {
+  if (transaction.status === "0x0") {
     res.status(422).send("error: block failed to be mined");
   }
   try {
+    // get transactionId by parsing hex number from log topics
     const transactionId = parseInt(transaction.logs[0].topics[1], 16);
     const destination = await blockchain.getDestination(transactionId);
     const amount = await blockchain.getAmount(transactionId);
