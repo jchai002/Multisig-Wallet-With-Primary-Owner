@@ -19,7 +19,7 @@ export function submitTransaction(destination, amount) {
     const multisig = await getMultisig();
     const transaction = await multisig.submitTransaction(
       destination,
-      amount,
+      web3.toWei(amount, "ether"),
       "",
       {
         from: sender

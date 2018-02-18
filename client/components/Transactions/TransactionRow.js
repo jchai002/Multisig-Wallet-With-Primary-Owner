@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import _ from "lodash";
+import web3Utils from "web3-utils";
 import {
   confirmTransaction,
   revokeConfirmation
@@ -35,6 +36,7 @@ export default class TransactionRow extends Component {
         N/A
       </button>
     );
+
     if (!executed) {
       if (_.includes(confirmedBy, currentAccountAddress)) {
         button = (
@@ -68,7 +70,9 @@ export default class TransactionRow extends Component {
     return (
       <div key={transactionId} className="row table-row">
         <div className="col-12 col-lg-1">{transactionId}</div>
-        <div className="col-12 col-lg-1">{amount}</div>
+        <div className="col-12 col-lg-1">
+          {web3Utils.fromWei(String(amount), "ether")}
+        </div>
         <div className="col-12 col-lg-6">{destination}</div>
         <div className="col-12 col-lg-1">{executionStatus}</div>
         <div className="col-12 col-lg-2">{button}</div>

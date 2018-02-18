@@ -13,7 +13,7 @@ export default class Multisig extends Component {
     super(props);
     this.state = {
       destination: "0xc2dbc0a6b68d6148d80273ce4d6667477dbf2aa7",
-      amount: "2"
+      amount: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -45,7 +45,7 @@ export default class Multisig extends Component {
             <div className="form-group">
               <label>Amount</label>
               <input
-                type="number"
+                type="text"
                 className="form-control"
                 onChange={e => {
                   this.setState({ amount: e.target.value });
