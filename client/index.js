@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { Provider } from "react-redux";
 import { syncHistoryWithStore } from "react-router-redux";
 
-import requireAccount from "./components/HOC/require_account";
+import requireWeb3 from "./components/HOC/require_web3";
 
 // Layouts
 import App from "App";
@@ -23,13 +23,13 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={requireAccount(NewTx)} />
+        <IndexRoute component={requireWeb3(NewTx)} />
         <Route path="missing-account" component={MissingAccount} />
-        <Route path="settings" component={requireAccount(Settings)} />
-        <Route path="transactions" component={requireAccount(Transactions)} />
+        <Route path="settings" component={requireWeb3(Settings)} />
+        <Route path="transactions" component={requireWeb3(Transactions)} />
         <Route
           path="transactions/:page"
-          component={requireAccount(Transactions)}
+          component={requireWeb3(Transactions)}
         />
       </Route>
     </Router>

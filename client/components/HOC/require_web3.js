@@ -3,16 +3,19 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { initializeWeb3 } from "app/actions/web3";
 import { getAccountInfo } from "app/actions/account";
+import { getMultisigInfo } from "app/actions/multisig";
 
 export default function(ComposedComponent) {
   @connect(
-    ({ web3, account }) => ({
+    ({ web3, account, multisig }) => ({
       web3,
-      account
+      account,
+      multisig
     }),
     {
       initializeWeb3,
-      getAccountInfo
+      getAccountInfo,
+      getMultisigInfo
     }
   )
   class HasAccount extends Component {
@@ -32,6 +35,9 @@ export default function(ComposedComponent) {
       }
       if (nextProps.account.accountFound === null) {
         this.props.getAccountInfo();
+      }
+      if (nextProps.multisig.contractFound === null) {
+        this.props.getMultisigInfo();
       }
     }
 

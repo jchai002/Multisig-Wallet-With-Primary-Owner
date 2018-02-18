@@ -7,3 +7,8 @@ export async function getMultisig() {
   MultisigContract.setProvider(storedWeb3().currentProvider);
   return await MultisigContract.deployed();
 }
+
+export async function getMultisigAddress() {
+  const multisig = await getMultisig();
+  return multisig.address;
+}

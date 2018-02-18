@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAccountInfo } from "../../actions/account";
+import { getMultisigInfo } from "../../actions/multisig";
 import { Link } from "react-router";
 
-@connect(({ account }) => ({ account }), { getAccountInfo })
+@connect(({ multisig }) => ({ multisig }), null)
 export default class Header extends Component {
   render() {
-    var etherBalance = this.props.account.etherBalance
-      ? this.props.account.etherBalance.toFixed(3)
+    var etherBalance = this.props.multisig.etherBalance
+      ? this.props.multisig.etherBalance.toFixed(3)
       : 0;
     return (
       <header>
@@ -18,13 +18,11 @@ export default class Header extends Component {
                 <Link to={"/"}>Multisig</Link>
               </h5>
             </div>
-            <div className="account">
+            <div className="info">
               <p>
-                <span>Account Address:</span>
-                <span className="address">{this.props.account.address}</span>
+                <span>Contract Address:</span>
+                <span className="address">{this.props.multisig.address}</span>
               </p>
-            </div>
-            <div className="balances">
               <p>
                 ETH: <span className="amount">{etherBalance}</span>
               </p>
