@@ -3,10 +3,15 @@ import { connect } from "react-redux";
 import { getTransactions } from "app/actions/transactions";
 import { Link } from "react-router";
 import TransactionRow from "./TransactionRow";
+import EthLogo from "app/assets/images/eth.png";
+import { BLOCK_PENDING } from "app/constants/ActionTypes";
 
-@connect(({ transactions, account }) => ({ transactions, account }), {
-  getTransactions
-})
+@connect(
+  ({ transactions, account, block }) => ({ transactions, account, block }),
+  {
+    getTransactions
+  }
+)
 export default class Transactions extends Component {
   constructor(props) {
     super(props);
@@ -39,9 +44,17 @@ export default class Transactions extends Component {
     if (!this.props.transactions) return null;
     const pageNumber = Number(this.props.transactions.pageNumber);
     const totalPages = Number(this.props.transactions.totalPages);
+    const indicator =
+      this.props.block === BLOCK_PENDING ? (
+        <img
+          className="eth-logo animated infinite pulse"
+          src={EthLogo}
+          role="presentation"
+        />
+      ) : null;
     return (
       <div className="transactions-page page-wrapper">
-        <h2>Transactions</h2>
+        <h2>Transactions {indicator}</h2>
         <div className="table-header">
           <div className="row">
             <div className="col-12 col-lg-1">Tx ID</div>

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { submitTransaction } from "app/actions/transactions";
+import EthLogo from "app/assets/images/eth.png";
+import { BLOCK_PENDING } from "app/constants/ActionTypes";
 
 @connect(
-  ({ transactions }) => ({
-    transactions
+  ({ transactions, block }) => ({
+    transactions,
+    block
   }),
   { submitTransaction }
 )
@@ -12,8 +15,8 @@ export default class Multisig extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      destination: "0x2cdb7e99ec3db8254650e72e4d87087b4dfae176",
-      amount: "0.001"
+      destination: "",
+      amount: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -25,10 +28,17 @@ export default class Multisig extends Component {
   }
 
   render() {
+    const indicator =
+      this.props.block === BLOCK_PENDING ? (
+        <img
+          className="eth-logo animated infinite pulse"
+          src={EthLogo}
+          role="presentation"
+        />
+      ) : null;
     return (
-      <div className="wallet-page page-wrapper">
-        <h2>Submit New Transaction</h2>
-
+      <div className="new-tx-page page-wrapper">
+        <h2>Submit New Transaction {indicator}</h2>
         <div className="content-wrapper">
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
@@ -55,7 +65,9 @@ export default class Multisig extends Component {
             <div className="form-group">
               <input
                 type="submit"
-                className="form-control btn btn-primary"
+                className={`btn btn-primary ${
+                  this.props.block === BLOCK_PENDING ? "disabled" : ""
+                }`}
                 placeholder="Send Ether"
               />
             </div>

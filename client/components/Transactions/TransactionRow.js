@@ -7,8 +7,9 @@ import {
   confirmTransaction,
   revokeConfirmation
 } from "app/actions/transactions";
+import { BLOCK_PENDING } from "app/constants/ActionTypes";
 
-@connect(({ account }) => ({ account }), {
+@connect(({ account, block }) => ({ account, block }), {
   confirmTransaction,
   revokeConfirmation
 })
@@ -41,7 +42,9 @@ export default class TransactionRow extends Component {
       if (_.includes(confirmedBy, currentAccountAddress)) {
         button = (
           <button
-            className="btn btn-primary"
+            className={`btn btn-primary ${
+              this.props.block === BLOCK_PENDING ? "disabled" : ""
+            }`}
             onClick={() => this.props.revokeConfirmation(transactionId)}
           >
             Revoke
@@ -50,7 +53,9 @@ export default class TransactionRow extends Component {
       } else {
         button = (
           <button
-            className="btn btn-primary"
+            className={`btn btn-primary ${
+              this.props.block === BLOCK_PENDING ? "disabled" : ""
+            }`}
             onClick={() => this.props.confirmTransaction(transactionId)}
           >
             Confirm

@@ -37,8 +37,6 @@ routes.put("/transactions/:transactionId/confirm", async (req, res) => {
       },
       { new: true }
     ).exec();
-    console.log("transaction", transaction);
-    console.log("updatedTransaction", updatedTransaction);
     res.send(updatedTransaction);
   } catch (err) {
     console.log(err);
@@ -72,8 +70,6 @@ routes.put("/transactions/:transactionId/revoke", async (req, res) => {
       },
       { new: true }
     ).exec();
-    console.log("transaction", transaction);
-    console.log("updatedTransaction", updatedTransaction);
     res.send(updatedTransaction);
   } catch (err) {
     console.log(err);

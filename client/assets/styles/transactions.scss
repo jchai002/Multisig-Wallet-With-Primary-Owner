@@ -1,3 +1,12 @@
+.new-tx-page {
+  .btn-primary {
+    margin-top: $space-lg;
+    width: 200px;
+    display: block;
+    margin-left: auto;
+  }
+}
+
 .transactions-page {
   .table-header,
   .table-footer {

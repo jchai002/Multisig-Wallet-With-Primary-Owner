@@ -8,7 +8,9 @@ import {
   SUBMIT_TRANSACTION_SUCCESS,
   SUBMIT_TRANSACTION_FAIL,
   UPDATE_TRANSACTION_SUCCESS,
-  UPDATE_TRANSACTION_FAIL
+  UPDATE_TRANSACTION_FAIL,
+  BLOCK_PENDING,
+  BLOCK_MINED
 } from "app/constants/ActionTypes";
 const maxGasToPay = 300000;
 
@@ -26,15 +28,17 @@ export function submitTransaction(destination, amount) {
         gas: maxGasToPay
       },
       async (err, transactionHash) => {
+        dispatch({ type: BLOCK_PENDING });
         const response = await api.post("/transactions", { transactionHash });
         if (response.status === 200) {
-          return dispatch({
+          dispatch({
             type: SUBMIT_TRANSACTION_SUCCESS,
             payload: response.data
           });
         } else {
-          return dispatch({ type: SUBMIT_TRANSACTION_FAIL });
+          dispatch({ type: SUBMIT_TRANSACTION_FAIL });
         }
+        dispatch({ type: BLOCK_MINED });
       }
     );
   };
@@ -52,6 +56,7 @@ export function confirmTransaction(transactionId) {
         gas: maxGasToPay
       },
       async (err, transactionHash) => {
+        dispatch({ type: BLOCK_PENDING });
         const response = await api.put(
           `/transactions/${transactionId}/confirm`,
           {
@@ -59,13 +64,14 @@ export function confirmTransaction(transactionId) {
           }
         );
         if (response.status === 200) {
-          return dispatch({
+          dispatch({
             type: UPDATE_TRANSACTION_SUCCESS,
             payload: response.data
           });
         } else {
-          return dispatch({ type: UPDATE_TRANSACTION_FAIL });
+          dispatch({ type: UPDATE_TRANSACTION_FAIL });
         }
+        dispatch({ type: BLOCK_MINED });
       }
     );
   };
@@ -83,6 +89,7 @@ export function revokeConfirmation(transactionId) {
         gas: maxGasToPay
       },
       async (err, transactionHash) => {
+        dispatch({ type: BLOCK_PENDING });
         const response = await api.put(
           `/transactions/${transactionId}/revoke`,
           {
@@ -90,13 +97,14 @@ export function revokeConfirmation(transactionId) {
           }
         );
         if (response.status === 200) {
-          return dispatch({
+          dispatch({
             type: UPDATE_TRANSACTION_SUCCESS,
             payload: response.data
           });
         } else {
-          return dispatch({ type: UPDATE_TRANSACTION_FAIL });
+          dispatch({ type: UPDATE_TRANSACTION_FAIL });
         }
+        dispatch({ type: BLOCK_MINED });
       }
     );
   };

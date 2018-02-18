@@ -8,7 +8,7 @@ export default class Footer extends Component {
     return (
       <footer>
         <div className="branding">
-          <img className="logo" src={Logo} />
+          <img className="logo" role="presentation" src={Logo} />
           <p>copyright© {new Date().getFullYear()}, Estates Digital.</p>
         </div>
         <div className="account">

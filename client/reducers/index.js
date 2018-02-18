@@ -4,6 +4,7 @@ import web3 from "./web3Reducer";
 import account from "./accountReducer";
 import multisig from "./multisigReducer";
 import transactions from "./transactionsReducer";
+import block from "./blockReducer";
 import settings from "./settingsReducer";
 
 const reducer = combineReducers({
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   account,
   multisig,
   transactions,
+  block,
   settings
 });
 
