@@ -79,8 +79,6 @@ routes.put("/transactions/:transactionId/revoke", async (req, res) => {
 
 routes.get("/transactions/:page", async (req, res) => {
   // Transaction.collection.remove();
-  // console.log("Transaction collection remove");
-  // res.send(null);
   const { page } = req.params;
   const results = await Transaction.paginate(
     {},

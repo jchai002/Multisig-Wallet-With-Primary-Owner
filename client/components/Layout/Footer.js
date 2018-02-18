@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAccountInfo } from "../../actions/account";
 import Logo from "app/assets/images/logo.png";
 
-@connect(({ account }) => ({ account }), { getAccountInfo })
+@connect(({ account }) => ({ account }), null)
 export default class Footer extends Component {
   render() {
     return (

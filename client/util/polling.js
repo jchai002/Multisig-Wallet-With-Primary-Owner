@@ -7,6 +7,11 @@ import { getMultisigAddress } from "app/util/contract";
 export async function pollForAccountUpdate() {
   const multisig = await getMultisigAddress();
   const web3 = store.getState().web3;
+  // clear existing timeouts
+  var timeoutId = window.setTimeout(function() {}, 0);
+  while (timeoutId--) {
+    window.clearTimeout(timeoutId);
+  }
   setTimeout(async () => {
     var metamaskAddress = web3.eth.accounts[0];
     var storedAddress = store.getState().account.address;
