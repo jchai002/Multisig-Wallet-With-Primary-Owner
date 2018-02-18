@@ -1,9 +1,9 @@
 const contract = require("truffle-contract");
-import Wallet from "contracts/MultiSigWallet.json";
+import Multisig from "contracts/MultiSigWallet.json";
 import { storedWeb3 } from "app/util/web3";
 
-export async function getWallet() {
-  const WalletContract = contract(Wallet);
-  WalletContract.setProvider(storedWeb3().currentProvider);
-  return await WalletContract.deployed();
+export async function getMultisig() {
+  const MultisigContract = contract(Multisig);
+  MultisigContract.setProvider(storedWeb3().currentProvider);
+  return await MultisigContract.deployed();
 }

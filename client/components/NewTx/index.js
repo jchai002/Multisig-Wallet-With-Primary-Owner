@@ -8,7 +8,7 @@ import { submitTransaction } from "app/actions/transactions";
   }),
   { submitTransaction }
 )
-export default class Wallet extends Component {
+export default class Multisig extends Component {
   constructor(props) {
     super(props);
     this.state = {

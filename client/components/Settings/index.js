@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getWallet } from "app/util/contract";
+import { getMultisig } from "app/util/contract";
 import { getSettings } from "app/actions/settings";
 
 @connect(

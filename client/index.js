@@ -8,7 +8,7 @@ import requireAccount from "./components/HOC/require_account";
 
 // Layouts
 import App from "App";
-import Wallet from "app/components/Wallet";
+import NewTx from "app/components/NewTx";
 import Transactions from "app/components/Transactions";
 import Settings from "app/components/Settings";
 import MissingAccount from "app/components/Error/MissingAccount";
@@ -23,7 +23,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={requireAccount(Wallet)} />
+        <IndexRoute component={requireAccount(NewTx)} />
         <Route path="missing-account" component={MissingAccount} />
         <Route path="settings" component={requireAccount(Settings)} />
         <Route path="transactions" component={requireAccount(Transactions)} />

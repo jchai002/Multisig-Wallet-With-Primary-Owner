@@ -35,6 +35,7 @@
     .details {
       position: relative;
       .details__display {
+        min-width: 300px;
         right: 0;
         top: 90%;
         padding: $space-sm;

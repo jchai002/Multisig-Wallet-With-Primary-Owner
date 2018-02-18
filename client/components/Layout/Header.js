@@ -31,9 +31,9 @@ export default class Header extends Component {
             </div>
           </div>
           <div className="menu">
-            <Link to="/">new</Link>
-            <Link to="/transactions">transactions</Link>
-            <Link to="/settings">settings</Link>
+            <Link to="/">NewTx</Link>
+            <Link to="/transactions">Transactions</Link>
+            <Link to="/settings">Settings</Link>
           </div>
         </div>
       </header>

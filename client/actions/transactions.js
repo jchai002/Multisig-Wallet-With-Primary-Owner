@@ -1,7 +1,7 @@
 import * as web3Utils from "app/util/web3";
 import axios from "axios";
 const api = axios.create({ baseURL: "/v1" });
-import { getWallet } from "app/util/contract";
+import { getMultisig } from "app/util/contract";
 import {
   GET_TRANSACTIONS_SUCCESS,
   GET_TRANSACTIONS_FAIL,
@@ -16,8 +16,8 @@ export function submitTransaction(destination, amount) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const wallet = await getWallet();
-    const transaction = await wallet.submitTransaction(
+    const multisig = await getMultisig();
+    const transaction = await multisig.submitTransaction(
       destination,
       amount,
       "",
@@ -41,8 +41,8 @@ export function confirmTransaction(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const wallet = await getWallet();
-    const transaction = await wallet.confirmTransaction(transactionId, {
+    const multisig = await getMultisig();
+    const transaction = await multisig.confirmTransaction(transactionId, {
       from: sender,
       gas: maxGasToPay
     });
@@ -64,8 +64,8 @@ export function revokeConfirmation(transactionId) {
   return async dispatch => {
     const web3 = web3Utils.storedWeb3();
     const sender = web3.eth.accounts[0];
-    const wallet = await getWallet();
-    const transaction = await wallet.revokeConfirmation(transactionId, {
+    const multisig = await getMultisig();
+    const transaction = await multisig.revokeConfirmation(transactionId, {
       from: sender,
       gas: maxGasToPay
     });
