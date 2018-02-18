@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { initializeWeb3 } from "app/actions/web3";
 import { getAccountInfo } from "app/actions/account";
 import { getMultisigInfo } from "app/actions/multisig";
+import { pollForAccountUpdate } from "app/util/polling";
 
 export default function(ComposedComponent) {
   @connect(
@@ -31,14 +32,15 @@ export default function(ComposedComponent) {
 
     componentWillReceiveProps(nextProps) {
       if (!nextProps.web3 || nextProps.account.accountFound === false) {
-        this.context.router.push("/missing-account");
+        return this.context.router.push("/missing-account");
       }
       if (nextProps.account.accountFound === null) {
-        this.props.getAccountInfo();
+        return this.props.getAccountInfo();
       }
       if (nextProps.multisig.contractFound === null) {
-        this.props.getMultisigInfo();
+        return this.props.getMultisigInfo();
       }
+      pollForAccountUpdate();
     }
 
     render() {

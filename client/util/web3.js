@@ -50,11 +50,11 @@ export function getAccountInfo() {
   });
 }
 
-export function getEtherBalance(accountAddress) {
+export function getEtherBalance(address) {
   return new Promise(async (resolve, reject) => {
     const web3 = store.getState().web3;
     // get balance
-    web3.eth.getBalance(accountAddress, (err, wei) => {
+    web3.eth.getBalance(address, (err, wei) => {
       if (err) {
         reject(err);
       }
