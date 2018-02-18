@@ -17,6 +17,18 @@ async function getConfirmations(transactionId) {
   return await wallet.getConfirmations(transactionId);
 }
 
+async function getDestination(transactionId) {
+  const wallet = await getWallet();
+  const transaction = await wallet.transactions(transactionId);
+  return transaction[0];
+}
+
+async function getAmount(transactionId) {
+  const wallet = await getWallet();
+  const transaction = await wallet.transactions(transactionId);
+  return transaction[1].toNumber();
+}
+
 async function getConfirmationStatus(transactionId) {
   const wallet = await getWallet();
   const requiredCount = await wallet.required();
@@ -69,6 +81,8 @@ module.exports = {
   pollForTransactionState,
   getParamFromTxEvent,
   getWallet,
+  getAmount,
+  getDestination,
   getConfirmations,
   getConfirmationStatus
 };

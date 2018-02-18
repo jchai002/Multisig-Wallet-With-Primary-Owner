@@ -5,6 +5,8 @@ const { Schema } = mongoose;
 const transactionSchema = new Schema({
   transactionId: Number,
   transactionHash: String,
+  destination: String,
+  amount: Number,
   confirmedBy: Array,
   confirmed: Boolean,
   dateSubmitted: Date,

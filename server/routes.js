@@ -118,6 +118,12 @@ routes.post("/transactions", async (req, res) => {
     if (confirmationStatus) {
       dateConfirmed = Date.now();
     }
+    console.log(
+      "address sent to",
+      await blockchain.getDestination(transactionId)
+    );
+    console.log("amount", await blockchain.getAmount(transactionId));
+
     var newTransaction = new Transaction({
       transactionId,
       transactionHash: transaction.tx,
