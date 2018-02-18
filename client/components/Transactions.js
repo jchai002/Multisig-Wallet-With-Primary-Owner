@@ -37,8 +37,11 @@ export default class Transactions extends Component {
 
   renderTransactions() {
     return this.props.transactions.transactionsOnPage.map(transaction => {
+      console.log(transaction);
       const {
         transactionId,
+        destination,
+        amount,
         dateSubmitted,
         dateExecuted,
         confirmedBy,
@@ -72,29 +75,16 @@ export default class Transactions extends Component {
         }
       }
 
-      var executionStatus = executed ? "Yes" : "No";
-
-      var confirmedByDisplay = [];
-      confirmedBy.map(addr => {
-        if (addr === currentAccountAddress) {
-          confirmedByDisplay.push("current account");
-        } else {
-          confirmedByDisplay.push(addr.substr(addr.length - 6));
-        }
-      });
+      var executionStatus = executed ? "Executed" : "Pending";
 
       return (
         <div key={transactionId} className="row table-row">
           <div className="col-12 col-lg-1">{transactionId}</div>
-          <div className="col-12 col-lg-2">
-            {moment(dateSubmitted).format("DD MMM YYYY")}
-          </div>
-          <div className="col-12 col-lg-2">
-            {dateExecuted ? moment(dateExecuted).format("DD MMM YYYY") : "N/A"}
-          </div>
-          <div className="col-12 col-lg-3">{confirmedByDisplay.join(", ")}</div>
-          <div className="col-12 col-lg-2">{executionStatus}</div>
-          <div className="col-12 col-lg-1">{button}</div>
+          <div className="col-12 col-lg-1">{amount}</div>
+          <div className="col-12 col-lg-6">{destination}</div>
+          <div className="col-12 col-lg-1">{executionStatus}</div>
+          <div className="col-12 col-lg-2">{button}</div>
+          <div className="col-12 col-lg-1">Details</div>
         </div>
       );
     });
@@ -110,11 +100,11 @@ export default class Transactions extends Component {
         <div className="table-header">
           <div className="row">
             <div className="col-12 col-lg-1">Tx ID</div>
-            <div className="col-12 col-lg-2">Date Submitted</div>
-            <div className="col-12 col-lg-2">Date Confirmed</div>
-            <div className="col-12 col-lg-3">Confirmed By</div>
-            <div className="col-12 col-lg-2">Confirmed?</div>
-            <div className="col-12 col-lg-1">Action</div>
+            <div className="col-12 col-lg-1">Amount</div>
+            <div className="col-12 col-lg-6">Destination</div>
+            <div className="col-12 col-lg-1">Status</div>
+            <div className="col-12 col-lg-2">Action</div>
+            <div className="col-12 col-lg-1">Details</div>
           </div>
         </div>
         <div className="table-body">
