@@ -16,7 +16,13 @@ export default class Settings extends Component {
     this.state = {};
   }
 
-  componentDidUpdate(nextProps) {
+  componentWillMount() {
+    if (this.props.web3) {
+      this.props.getSettings();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
     if (nextProps.web3 && !this.props.settings) {
       this.props.getSettings();
     }
@@ -35,14 +41,12 @@ export default class Settings extends Component {
   }
 
   render() {
-    console.log(this.props.settings);
-
     if (!this.props.settings) {
       return null;
     }
     return (
-      <div>
-        <h1>Settings</h1>
+      <div className="settings page-wrapper">
+        <h2>Settings</h2>
         <div className="owners">{this.renderOwners()}</div>
       </div>
     );

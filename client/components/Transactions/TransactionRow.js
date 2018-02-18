@@ -103,7 +103,9 @@ export default class TransactionRow extends Component {
             <div>
               <p>Confirmed By:</p>{" "}
               {confirmedByDisplay.map(addr => (
-                <p className="highlight">{addr}</p>
+                <p key={addr} className="highlight">
+                  {addr}
+                </p>
               ))}
             </div>
           </div>
