@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  getTransactions,
-  confirmTransaction,
-  revokeConfirmation
-} from "app/actions/transactions";
-import moment from "moment";
+import { getTransactions } from "app/actions/transactions";
 import { Link } from "react-router";
-import _ from "lodash";
+import TransactionRow from "./TransactionRow";
 
 @connect(({ transactions, account }) => ({ transactions, account }), {
-  getTransactions,
-  confirmTransaction,
-  revokeConfirmation
+  getTransactions
 })
 export default class Transactions extends Component {
   constructor(props) {
@@ -35,60 +28,12 @@ export default class Transactions extends Component {
     }
   }
 
-  renderTransactions() {
-    return this.props.transactions.transactionsOnPage.map(transaction => {
-      console.log(transaction);
-      const {
-        transactionId,
-        destination,
-        amount,
-        dateSubmitted,
-        dateExecuted,
-        confirmedBy,
-        executed
-      } = transaction;
-      const currentAccountAddress = this.props.account.address;
-      var button = (
-        <button className="btn btn-primary disabled" disabled>
-          N/A
-        </button>
-      );
-      if (!executed) {
-        if (_.includes(confirmedBy, currentAccountAddress)) {
-          button = (
-            <button
-              className="btn btn-primary"
-              onClick={() => this.props.revokeConfirmation(transactionId)}
-            >
-              Revoke
-            </button>
-          );
-        } else {
-          button = (
-            <button
-              className="btn btn-primary"
-              onClick={() => this.props.confirmTransaction(transactionId)}
-            >
-              Confirm
-            </button>
-          );
-        }
-      }
-
-      var executionStatus = executed ? "Executed" : "Pending";
-
+  renderTransactions = () =>
+    this.props.transactions.transactionsOnPage.map(transaction => {
       return (
-        <div key={transactionId} className="row table-row">
-          <div className="col-12 col-lg-1">{transactionId}</div>
-          <div className="col-12 col-lg-1">{amount}</div>
-          <div className="col-12 col-lg-6">{destination}</div>
-          <div className="col-12 col-lg-1">{executionStatus}</div>
-          <div className="col-12 col-lg-2">{button}</div>
-          <div className="col-12 col-lg-1">Details</div>
-        </div>
+        <TransactionRow key={transaction.transactionId} {...transaction} />
       );
     });
-  }
 
   render() {
     if (!this.props.transactions) return null;
