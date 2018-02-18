@@ -1,6 +1,6 @@
 import {
-  GET_WALLET_INFO_SUCCESS,
-  GET_WALLET_INFO_FAIL
+  GET_ACCOUNT_INFO_SUCCESS,
+  GET_ACCOUNT_INFO_FAIL
 } from "app/constants/ActionTypes";
 import { getAccountAddress, getEtherBalance } from "app/util/web3";
 
@@ -11,13 +11,13 @@ export function getAccountInfo() {
     } catch (e) {
       console.error(e);
       dispatch({
-        type: GET_WALLET_INFO_FAIL
+        type: GET_ACCOUNT_INFO_FAIL
       });
     } finally {
       if (address) {
         let etherBalance = await getEtherBalance(address);
         dispatch({
-          type: GET_WALLET_INFO_SUCCESS,
+          type: GET_ACCOUNT_INFO_SUCCESS,
           payload: { address, etherBalance }
         });
       }

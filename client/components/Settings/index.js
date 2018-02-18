@@ -47,7 +47,18 @@ export default class Settings extends Component {
     return (
       <div className="settings page-wrapper">
         <h2>Settings</h2>
-        <div className="owners">{this.renderOwners()}</div>
+        <div className="content-wrapper">
+          <div className="owners">
+            <h3>Owners</h3>
+            <div className="owners__content">{this.renderOwners()}</div>
+          </div>
+          <div className="required-count">
+            <h3>Min Confirmations</h3>
+            <div className="required-count__content">
+              {this.props.settings.required}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
