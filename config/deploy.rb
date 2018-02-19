@@ -32,13 +32,4 @@ append :linked_dirs, "node_modules"
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-# post deploy tasks
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    invoke 'pm2:restart'
-  end
-
-  after :publishing, :restart
-end
+set :pm2_app_command, 'server/index.js'
