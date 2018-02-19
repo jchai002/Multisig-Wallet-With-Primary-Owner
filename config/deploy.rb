@@ -35,13 +35,10 @@ set :keep_releases, 3
 # post deploy tasks
 namespace :deploy do
 
-  desc 'Rebuild Webpack Bunlde'
-  task :webpack do
-    on roles(:app) do
-      execute "echo 'Rebuilding webpack bundle...'"
-      execute "#{fetch(:deploy_to)}/current/node_modules/.bin/webpack --config #{fetch(:deploy_to)}/current/config/webpack.config.prod.js"
-    end
+  desc 'Restart application'
+  task :restart do
+    invoke 'pm2:restart'
   end
 
-  after :publishing, :webpack
+  after :publishing, :restart
 end
