@@ -10,5 +10,6 @@ install_plugin Capistrano::SCM::Git
 
 #npm/yarn tasks
 require 'capistrano/yarn'
+require 'capistrano/pm2'
 
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
