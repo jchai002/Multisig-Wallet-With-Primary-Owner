@@ -7,8 +7,8 @@ node_modules
 coverage
 
 # production
-build
-build_webpack
+# build
+# build_webpack
 
 # misc
 .DS_Store
@@ -17,6 +17,7 @@ npm-debug.log
 .truffle-solidity-loader
 specs.md
 .accounts
+log
 
 #IDE
 .idea
