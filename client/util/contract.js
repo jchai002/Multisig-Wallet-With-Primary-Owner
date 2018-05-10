@@ -1,5 +1,5 @@
 const truffle = require("truffle-contract");
-import Multisig from "contracts/MultiSigWallet.json";
+import Multisig from "contracts/MultisigWalletWithPrimaryOwner.json";
 import { storedWeb3 } from "app/util/web3";
 import detectNetwork from "web3-detect-network";
 
